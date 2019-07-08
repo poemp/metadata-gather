@@ -36,7 +36,7 @@ public class Swagger2Config {
                 .required(false).build();
         paraList.add(param1);
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("电脑端API-Web")
+                .groupName("api doc")
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.poem.controller"))
