@@ -68,7 +68,8 @@ create table `dsg_gather_table_fields`
 ) engine = innodb
   default charset = utf8 comment ='元数据表信息';
 
+ALTER TABLE  `dsg_gather_table`
+    MODIFY COLUMN `description` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述' AFTER `name`;
 
-
-
-select `information_schema`.`SCHEMATA`.`SCHEMA_NAME` from `information_schema`.`SCHEMATA`
+ALTER TABLE `dsg_gather_info`
+    ADD COLUMN `service_name` varchar(255) NULL COMMENT 'oracle 服务名字' AFTER `type`;

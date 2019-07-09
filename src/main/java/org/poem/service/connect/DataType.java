@@ -13,7 +13,7 @@ public enum DataType {
     /**
      * orcale
      */
-    ORCALE( "ORCALE" );
+    ORACLE( "ORACLE" );
 
     private String name;
 

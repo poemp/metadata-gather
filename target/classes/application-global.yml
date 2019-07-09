@@ -81,6 +81,9 @@ global:
   dsg_monitor: 
     server: 
       port: 10014
+  gather:
+    server:
+      port: 10015
 
   hbase:
     master: 192.168.23.111:21300

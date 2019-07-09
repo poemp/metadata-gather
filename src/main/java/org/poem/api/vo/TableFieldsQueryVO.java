@@ -3,13 +3,15 @@ package org.poem.api.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Administrator
  */
 @Data
 @ApiModel("数据表列")
-public class TableFieldsVO {
+@NoArgsConstructor
+public class TableFieldsQueryVO {
 
     @ApiModelProperty("表id")
     private String tableId;
@@ -17,12 +19,12 @@ public class TableFieldsVO {
     @ApiModelProperty("列id")
     private String field;
 
-    @ApiModelProperty("列的数据类型")
-    private String dataType;
-
     @ApiModelProperty("表的描述")
     private String description;
 
-    @ApiModelProperty("默认值")
-    private String defaultValue;
+    public TableFieldsQueryVO(String tableId, String field, String description) {
+        this.tableId = tableId;
+        this.field = field;
+        this.description = description;
+    }
 }

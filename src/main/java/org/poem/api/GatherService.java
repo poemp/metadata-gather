@@ -36,6 +36,7 @@ public interface GatherService {
     TableVO getTableById(String table);
 
     /**
+     * 获取表的字端信息
      * @param tableVO
      * @return
      */

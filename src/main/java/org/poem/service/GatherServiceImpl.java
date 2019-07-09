@@ -16,6 +16,8 @@ import org.poem.service.connect.DataType;
 import org.poem.service.connect.GatherBuilder;
 import org.poem.service.connect.GatherConnection;
 import org.poem.service.databases.GatherDataBaseInter;
+import org.poem.utils.GatherDataSourceUtils;
+import org.poem.utils.ThreadUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +44,6 @@ public class GatherServiceImpl implements GatherService {
 
     @Autowired
     private DsgGatherTableDao dsgGatherTableDao;
-
-    @Autowired
-    private GatherDataBaseInter gatherDataBaseInter;
 
     /**
      * @param gatherId
@@ -73,10 +72,12 @@ public class GatherServiceImpl implements GatherService {
         if (infoRecord == null) {
             throw new IllegalArgumentException( "this entity[" + gatherId + "] is not exist." );
         }
+        ThreadUtils.setDataTypeThreadLocal( DataType.valueOf( infoRecord.getType() ) );
         return new GatherBuilder()
                 .ip( infoRecord.getIp() )
                 .password( infoRecord.getPassword() )
                 .port( infoRecord.getPort() )
+                .serverName( infoRecord.getServiceName() )
                 .user( infoRecord.getUser() ).dataType( DataType.valueOf( infoRecord.getType() ) )
                 .budder();
     }
@@ -88,7 +89,8 @@ public class GatherServiceImpl implements GatherService {
     @Override
     public List<DbVO> getSchema(String gatherId) {
         GatherConnection connection = this.getGatherConnection( gatherId );
-        List<DateBaseEntity> dateBaseEntities = this.gatherDataBaseInter.getDataBases( connection.getConnection() );
+        GatherDataBaseInter gatherDataBaseInter = GatherDataSourceUtils.getBean();
+        List<DateBaseEntity> dateBaseEntities = gatherDataBaseInter.getDataBases( connection.getConnection() );
         return dateBaseEntities.stream().map(
                 o -> {
                     DbVO dbVO = new DbVO();
@@ -112,13 +114,14 @@ public class GatherServiceImpl implements GatherService {
         if (dsgGatherDbRecord == null) {
             throw new NullPointerException( "entity DsgGatherDbRecord[" + gatherVO.getDbId() + "] is null !!!!!!" );
         }
-        List<TableEntity> tableEntities = this.gatherDataBaseInter
+        GatherDataBaseInter gatherDataBaseInter = GatherDataSourceUtils.getBean();
+        List<TableEntity> tableEntities = gatherDataBaseInter
                 .getAllTableName( dsgGatherDbRecord.getSchema(), connection.getConnection() );
         return tableEntities.stream().map(
                 o -> {
                     TableVO tableVO = new TableVO();
                     tableVO.setDbId( gatherVO.getId() );
-                    tableVO.setName( o.getTableName() );
+                    tableVO.setName( o.getComment() );
                     tableVO.setTable( o.getTableName() );
                     return tableVO;
                 }
@@ -157,7 +160,8 @@ public class GatherServiceImpl implements GatherService {
         if (dsgGatherDbRecord == null) {
             throw new NullPointerException( "entity DsgGatherDbRecord[" + tableVO.getDbId() + "] is null !!!!!!" );
         }
-        DataSetVO setVO = this.gatherDataBaseInter
+        GatherDataBaseInter gatherDataBaseInter = GatherDataSourceUtils.getBean();
+        DataSetVO setVO = gatherDataBaseInter
                 .getTaleFields( dbRecord.getSchema(), tableRecord.getTable_(), connection.getConnection() );
         return setVO.getDatas().stream().map(
                 list -> {
@@ -182,21 +186,21 @@ public class GatherServiceImpl implements GatherService {
         GatherDBTableFieldsVO gatherDBTableFieldsVO = new GatherDBTableFieldsVO();
         GatherConnection n = this.getGatherConnection( gatherId );
         Connection connection = n.getConnection();
-        List<DateBaseEntity> dateBaseEntities = this.gatherDataBaseInter.getDataBases( connection );
+        GatherDataBaseInter gatherDataBaseInter = GatherDataSourceUtils.getBean();
+        List<DateBaseEntity> dateBaseEntities = gatherDataBaseInter.getDataBases( connection );
         List<GatherDBVO> gatherDBVOS = Lists.newArrayList();
         for (DateBaseEntity dateBaseEntity : dateBaseEntities) {
             DbVO dbVO = new DbVO();
             dbVO.setGatherId( gatherId );
             dbVO.setName( dateBaseEntity.getDatabaseName() );
-            List<TableEntity> tableEntities = this.gatherDataBaseInter.getAllTableName( dateBaseEntity.getDatabaseName(), connection );
+            List<TableEntity> tableEntities = gatherDataBaseInter.getAllTableName( dateBaseEntity.getDatabaseName(), connection );
             List<GatherTableVO> gatherTableVOS = Lists.newArrayList();
             for (TableEntity tableEntity : tableEntities) {
                 TableVO tableVO = new TableVO();
                 tableVO.setDbId( null );
-                tableVO.setName( tableEntity.getTableName() );
+                tableVO.setName( tableEntity.getComment() );
                 tableVO.setTable( tableEntity.getTableName() );
-                DataSetVO dataSetVO = this.gatherDataBaseInter
-                        .getTaleFields( dateBaseEntity.getDatabaseName(), tableEntity.getTableName(), connection );
+                DataSetVO dataSetVO = gatherDataBaseInter .getTaleFields( dateBaseEntity.getDatabaseName(), tableEntity.getTableName(), connection );
                 List<TableFieldsVO> tableFieldsVOS = dataSetVO.getDatas().stream().map(
                         list -> {
                             String columnName = String.valueOf( list.get( 0 ) );

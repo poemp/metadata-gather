@@ -10,12 +10,12 @@ public class GatherBuilder {
     /**
      * 地址
      */
-    private  String ip;
+    private String ip;
 
     /**
      * 端口号
      */
-    private  String port;
+    private String port;
 
     /**
      * 用户名
@@ -31,6 +31,11 @@ public class GatherBuilder {
      * 数据类型
      */
     private DataType dataType;
+
+    /**
+     * oracle 服务名字
+     */
+    private String serviceName;
 
     /**
      * @param ip
@@ -61,44 +66,54 @@ public class GatherBuilder {
         return this;
     }
 
+    public GatherBuilder serverName(String serviceName) {
+        this.serviceName = serviceName;
+        return this;
+    }
+
 
     /**
      * @return
      * @throws ClassNotFoundException
      */
-    public  GatherConnection budder() {
+    public GatherConnection budder() {
         if (StringUtils.isBlank( ip )) {
-            throw new IllegalArgumentException( "ip not null" );
+            throw new IllegalArgumentException( "ip not null !!!!!!!" );
         }
         if (StringUtils.isBlank( password )) {
-            throw new IllegalArgumentException( "password not null" );
+            throw new IllegalArgumentException( "password not null !!!!!!! " );
         }
         if (StringUtils.isBlank( userName )) {
-            throw new IllegalArgumentException( "user not null" );
+            throw new IllegalArgumentException( "user not null !!!!!!! " );
         }
         if (StringUtils.isBlank( port )) {
-            throw new IllegalArgumentException( "port not null" );
+            throw new IllegalArgumentException( "port not null !!!!!!! " );
         }
         if (dataType == null) {
-            throw new IllegalArgumentException( "dataType not null" );
+            throw new IllegalArgumentException( "dataType not null !!!!!!!" );
+        }
+        if (StringUtils.isBlank( serviceName ) && dataType.eq( DataType.ORACLE )) {
+            throw new IllegalArgumentException( "oracle server name can\'t  be null !!!!!!!" );
         }
         String url = null;
-        try{
+        try {
             if (dataType.equals( DataType.MYSQL )) {
                 Class.forName( "com.mysql.cj.jdbc.Driver" );
                 url = "jdbc:mysql://" + ip + ":" + port + "?useSSL=false&serverTimezone=UTC";
-            } else if (dataType.eq( DataType.ORCALE )) {
+            } else if (dataType.eq( DataType.ORACLE )) {
                 Class.forName( "oracle.jdbc.driver.OracleDriver" );
-                url = "jdbc:oracle:thin:@" + ip + ":" + port + ":orcl";
+                //jdbc:oracle:thin:@//localhost:1521:orcl
+                //url = "jdbc:oracle:thin:@" + ip + ":" + port + ":orcl";
+                url = "jdbc:oracle:thin:@(description=(address=(protocol=tcp)(port=" + port + ")(host=" + ip + "))(connect_data=(service_name=" + serviceName + ")))";
             } else {
                 throw new IllegalArgumentException( "data type[" + dataType + "] is not  unrecognizable !!!!!!" );
             }
-        }catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            logger.error( e.getLocalizedMessage(),e );
+            logger.error( e.getLocalizedMessage(), e );
         }
-        if (url == null){
-            throw  new NullPointerException( "url is null!!!!!!" );
+        if (url == null) {
+            throw new NullPointerException( "url is null!!!!!!" );
         }
         return new GatherConnection( url, password, userName );
     }

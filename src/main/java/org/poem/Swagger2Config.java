@@ -27,30 +27,26 @@ public class Swagger2Config {
 
 
     @Bean
-    public Docket createWebRestApi() {
+    public Docket createAllRestApi() {
         List<Parameter> paraList = new ArrayList<>();
-        ParameterBuilder paraBuilder = new ParameterBuilder();
-        springfox.documentation.service.Parameter param1 = paraBuilder
-                .modelRef( new ModelRef( "string" ) ).parameterType( "header" )
-                .required( false ).build();
-        paraList.add( param1 );
-        return new Docket( DocumentationType.SWAGGER_2 )
-                .groupName( "api doc" )
-                .apiInfo( apiInfo() )
+
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("API-All")
+                .apiInfo(apiInfo())
                 .select()
-                .apis( RequestHandlerSelectors.basePackage( "org.poem.controller" ) )
-                .paths( PathSelectors.any() )
+                .apis(RequestHandlerSelectors.basePackage("org.poem.controller"))
+                .paths(PathSelectors.any())
                 .build()
-                .globalOperationParameters( paraList );
+                .globalOperationParameters(paraList);
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title( "元数据查看工具" )
-                .description( "元数据查看工具接口" )
-                .termsOfServiceUrl( "未提供" )
-                .contact( new Contact( "poem", "", "" ) )
-                .version( "0.0.1" )
+                .title("数据采集小工具")
+                .description("数据采集 接口")
+                .termsOfServiceUrl("未提供")
+                .contact(new Contact("poem", "", "xue_2013@sina.com"))
+                .version("1.0.0")
                 .build();
     }
 }

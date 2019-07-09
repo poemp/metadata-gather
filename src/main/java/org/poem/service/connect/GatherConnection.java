@@ -1,6 +1,5 @@
 package org.poem.service.connect;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,7 +72,7 @@ public class GatherConnection implements Closeable {
      * @throws IOException
      */
     @Override
-    public void close() throws IOException {
+    public void close() {
         try {
             this.connection.close();
         } catch (SQLException e) {

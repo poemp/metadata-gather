@@ -50,11 +50,18 @@ public interface MetadataService {
     List<DsgGatherTableRecord> saveTable(List<TableVO> tableVOS, String dbId);
 
     /**
-     * @param db
+     * @param tableQueryVO
      * @return
      */
-    List<TableVO> getTable(String db);
+    List<TableVO> getTable(TableQueryVO  tableQueryVO);
 
+
+    /**
+     * 获取表的信息
+     * @param tableFieldsQueryVO
+     * @return
+     */
+    public List<TableFieldsVO> getTableFileds(TableFieldsQueryVO tableFieldsQueryVO);
     /**
      * 保存数据
      *
@@ -63,7 +70,7 @@ public interface MetadataService {
     List<DsgGatherTableFieldsRecord> saveTableFields(List<TableFieldsVO> fieldsVOS, String tableId);
 
     /**
-     *
+     * 删除
      * @param gatherId
      */
     void deleteAllDataGatherInfoId(String gatherId);
@@ -72,4 +79,11 @@ public interface MetadataService {
      * @param gatherDBTableFieldsVO
      */
     public void saveGather(GatherDBTableFieldsVO gatherDBTableFieldsVO);
+
+    /**
+     * 查询保存的数据
+     * @param queryGatherDBTableFieldsVO
+     * @return
+     */
+    GatherDBTableFieldsVO getDBTableAndFields(QueryGatherDBTableFieldsVO queryGatherDBTableFieldsVO);
 }

@@ -1,9 +1,12 @@
 package org.poem.utils;
 
+import org.poem.service.connect.DataType;
+import org.poem.service.databases.GatherDataBaseInter;
+import org.poem.service.databases.MysqlGatherData;
+import org.poem.service.databases.OrcaleGatherData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -13,8 +16,10 @@ import java.sql.Statement;
 public class GatherDataSourceUtils {
 
     private static final Logger logger = LoggerFactory.getLogger( GatherDataSourceUtils.class );
+
     /**
      * 关闭
+     *
      * @param pstmt
      * @param rs
      */
@@ -34,6 +39,23 @@ public class GatherDataSourceUtils {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+
+    /**
+     * 获取数据的bean类型
+     *
+     * @return
+     */
+    public static GatherDataBaseInter getBean() {
+        DataType dataType = ThreadUtils.getDataTypeThreadLocal().get();
+        if (DataType.MYSQL.eq( dataType )) {
+            return SpringUtils.getBean( MysqlGatherData.BEAN, MysqlGatherData.class );
+        } else if (DataType.ORACLE.eq( dataType )) {
+            return SpringUtils.getBean( OrcaleGatherData.BEAN, OrcaleGatherData.class );
+        } else {
+            throw new IllegalArgumentException( "not unrecognizable type[" + dataType + "] !!!!!!!!!" );
         }
     }
 }
