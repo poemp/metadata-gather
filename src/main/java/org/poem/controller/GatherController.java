@@ -29,7 +29,7 @@ public class GatherController {
      *
      * @return
      */
-    @ApiOperation(value = "0101-获取所有的连接信息", notes = "根据条件查询标签结果")
+    @ApiOperation(value = "0101-获取所有的连接信息", notes = "获取所有的连接信息")
     @ApiResponses({
             @ApiResponse(code = 400, message = "请求参数没有填好"),
             @ApiResponse(code = 404, message = "请求路径没有找到"),
@@ -59,7 +59,7 @@ public class GatherController {
      * 删除所有保存的连接信息
      * @param gatherId
      */
-    @ApiOperation(value = "0103-删除所有保存的连接信息", notes = "启动任务")
+    @ApiOperation(value = "0103-删除所有保存的连接信息", notes = "删除所有保存的连接信息")
     @ApiResponses({
             @ApiResponse(code = 400, message = "请求参数没有填好"),
             @ApiResponse(code = 404, message = "请求路径没有找到"),
@@ -80,7 +80,7 @@ public class GatherController {
      * @param queryGatherDBTableFieldsVO
      * @return
      */
-    @ApiOperation(value = "0103-根据信息连接信息获取库、表、字端", notes = "启动任务")
+    @ApiOperation(value = "0103-根据信息连接信息获取库、表、字端", notes = "根据信息连接信息获取库、表、字端")
     @ApiResponses({
             @ApiResponse(code = 400, message = "请求参数没有填好"),
             @ApiResponse(code = 404, message = "请求路径没有找到"),
@@ -99,7 +99,7 @@ public class GatherController {
      * @param gatherId
      * @return
      */
-    @ApiOperation(value = "0105-数据库-测试连接是否正常", notes = "启动任务")
+    @ApiOperation(value = "0105-数据库-测试连接是否正常", notes = "数据库-测试连接是否正常")
     @ApiResponses({
             @ApiResponse(code = 400, message = "请求参数没有填好"),
             @ApiResponse(code = 404, message = "请求路径没有找到"),
@@ -120,7 +120,7 @@ public class GatherController {
      * @return
      */
 
-    @ApiOperation(value = "0106-数据库-获取数据的schema", notes = "启动任务")
+    @ApiOperation(value = "0106-数据库-获取数据的schema", notes = "数据库-获取数据的schema")
     @ApiResponses({
             @ApiResponse(code = 400, message = "请求参数没有填好"),
             @ApiResponse(code = 404, message = "请求路径没有找到"),
@@ -140,7 +140,7 @@ public class GatherController {
      * @param gatherVO
      * @return
      */
-    @ApiOperation(value = "0107-数据库-获取数据表字端信息", notes = "启动任务")
+    @ApiOperation(value = "0107-数据库-获取数据表字端信息", notes = "获取数据表字端信息")
     @ApiResponses({
             @ApiResponse(code = 400, message = "请求参数没有填好"),
             @ApiResponse(code = 404, message = "请求路径没有找到"),
@@ -156,7 +156,7 @@ public class GatherController {
      * @param tableVO
      * @return
      */
-    @ApiOperation(value = "0108-数据库-获取表的字端信息", notes = "启动任务")
+    @ApiOperation(value = "0108-数据库-获取表的字端信息", notes = "获取表的字端信息")
     @ApiResponses({
             @ApiResponse(code = 400, message = "请求参数没有填好"),
             @ApiResponse(code = 404, message = "请求路径没有找到"),
@@ -172,7 +172,7 @@ public class GatherController {
      * 根据信息连接信息获取库
      * @param gatherId
      */
-    @ApiOperation(value = "0109-数据库-根据信息连接信息获取库、表、字端,并且保存到数据库中", notes = "启动任务")
+    @ApiOperation(value = "0109-数据库-根据信息连接信息获取库、表、字端,并且保存到数据库中", notes = "数据库-根据信息连接信息获取库、表、字端,并且保存到数据库中")
     @ApiResponses({
             @ApiResponse(code = 400, message = "请求参数没有填好"),
             @ApiResponse(code = 404, message = "请求路径没有找到"),
