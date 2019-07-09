@@ -13,6 +13,6 @@ public class MetadataGatherApp {
 
 
     public static void main(String[] args) {
-        SpringApplication.run( MetadataGatherApp.class, args);
+        SpringApplication.run( MetadataGatherApp.class, args );
     }
 }

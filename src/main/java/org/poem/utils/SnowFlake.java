@@ -33,28 +33,30 @@ public class SnowFlake {
     private final static long MACHINE_LEFT = SEQUENCE_BIT;
     private final static long DATACENTER_LEFT = SEQUENCE_BIT + MACHINE_BIT;
     private final static long TIMESTMP_LEFT = DATACENTER_LEFT + DATACENTER_BIT;
+    private static SnowFlake snowFlake;
+
+    static {
+        snowFlake = new SnowFlake( 1, 1 );
+    }
 
     private long datacenterId;  //数据中心
     private long machineId;     //机器标识
     private long sequence = 0L; //序列号
     private long lastStmp = -1L;//上一次时间戳
 
-
-    private static SnowFlake snowFlake;
-
-    static {
-        snowFlake = new SnowFlake(1, 1);
-    }
-
     public SnowFlake(long datacenterId, long machineId) {
         if (datacenterId > MAX_DATACENTER_NUM || datacenterId < 0) {
-            throw new IllegalArgumentException("datacenterId can't be greater than MAX_DATACENTER_NUM or less than 0");
+            throw new IllegalArgumentException( "datacenterId can't be greater than MAX_DATACENTER_NUM or less than 0" );
         }
         if (machineId > MAX_MACHINE_NUM || machineId < 0) {
-            throw new IllegalArgumentException("machineId can't be greater than MAX_MACHINE_NUM or less than 0");
+            throw new IllegalArgumentException( "machineId can't be greater than MAX_MACHINE_NUM or less than 0" );
         }
         this.datacenterId = datacenterId;
         this.machineId = machineId;
+    }
+
+    public static String genId() {
+        return Long.toString( snowFlake.nextId() );
     }
 
     /**
@@ -65,7 +67,7 @@ public class SnowFlake {
     public synchronized long nextId() {
         long currStmp = getNewstmp();
         if (currStmp < lastStmp) {
-            throw new RuntimeException("Clock moved backwards.  Refusing to generate id");
+            throw new RuntimeException( "Clock moved backwards.  Refusing to generate id" );
         }
 
         if (currStmp == lastStmp) {
@@ -98,10 +100,6 @@ public class SnowFlake {
 
     private long getNewstmp() {
         return System.currentTimeMillis();
-    }
-
-    public static String genId(){
-        return Long.toString(snowFlake.nextId());
     }
 
 }

@@ -28,26 +28,26 @@ public class JooqConfiguration {
 
     @Bean
     public DataSourceConnectionProvider connectionProvider() {
-        return new DataSourceConnectionProvider(new TransactionAwareDataSourceProxy(dataSource));
+        return new DataSourceConnectionProvider( new TransactionAwareDataSourceProxy( dataSource ) );
     }
 
     @Bean
     DefaultDSLContext dsl() {
 
         Settings settings = new Settings();
-        settings.withRenderSchema(false);
+        settings.withRenderSchema( false );
         org.jooq.Configuration conf = new DefaultConfiguration();
-        TransactionAwareDataSourceProxy proxy = new TransactionAwareDataSourceProxy(dataSource);
-        conf.set(new DataSourceConnectionProvider(proxy))
-                .set(settings)
-                .set( SQLDialect.MYSQL);
-        DefaultDSLContext defaultDSLContext = new DefaultDSLContext(conf);
+        TransactionAwareDataSourceProxy proxy = new TransactionAwareDataSourceProxy( dataSource );
+        conf.set( new DataSourceConnectionProvider( proxy ) )
+                .set( settings )
+                .set( SQLDialect.MYSQL );
+        DefaultDSLContext defaultDSLContext = new DefaultDSLContext( conf );
         return defaultDSLContext;
     }
 
     public DefaultConfiguration configuration() {
         DefaultConfiguration jooqConfiguration = new DefaultConfiguration();
-        jooqConfiguration.set(connectionProvider());
+        jooqConfiguration.set( connectionProvider() );
         return jooqConfiguration;
     }
 

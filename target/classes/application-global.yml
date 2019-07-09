@@ -5,36 +5,16 @@ global:
   eureka:
     host: 192.168.23.177   #eureka服务注册与发现的主机ip
     port: 8761     #启动端口
-  #redis服务配置
-  redis:
-    host: 192.168.23.132  #redis服务所部署的服务器ip
-    port: 6382   #redis默认端口
-    password:
-  activemq:
-    broker-url: tcp://192.168.23.112:61616
-    user: admin
-    password: admin
-  
-  #规则
-  urule:
-    project:
-      default:
-        name: 项目1
+
  #数据源配置
   datasource:
     name: test  #数据库源名称
     #database-name: db_dcp_dev
     database-name: kylo
-    url: 192.168.23.112  #数据库所在的url地址
+    url: 127.0.0.1  #数据库所在的url地址
     port: 3306   #数据库端口
     username: root   #数据库用户名
-    password: mysql   #数据库密码
-    metastore:
-      driver: org.postgresql.Driver
-      url: jdbc:postgresql://192.168.23.116:20051/hivemeta?socketTimeout=60
-      username: hive   #数据库用户名
-      password: HiveUser@   #数据库密码
-      
+    password: 123456   #数据库密码
   #中心配置模块
   ace-center:
     server:

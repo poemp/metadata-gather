@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MysqlConf {
 
-    private static final Logger logger = LoggerFactory.getLogger(MysqlConf.class);
+    private static final Logger logger = LoggerFactory.getLogger( MysqlConf.class );
     @Value("${spring.datasource.url}")
     private String connectionUrl;
     @Value("${spring.datasource.username}")
@@ -23,15 +23,16 @@ public class MysqlConf {
 
     /**
      * 配置数据源
+     *
      * @return
      */
     @Bean(name = "mysqlDatasource")
     public MysqlDataSource initDataSource() {
-        logger.info("Init Mysql Datasource");
+        logger.info( "Init Mysql Datasource" );
         MysqlDataSource basicDataSource = new MysqlDataSource();
-        basicDataSource.setUrl(connectionUrl);
-        basicDataSource.setUser(username);
-        basicDataSource.setPassword(password);
+        basicDataSource.setUrl( connectionUrl );
+        basicDataSource.setUser( username );
+        basicDataSource.setPassword( password );
         return basicDataSource;
     }
 
