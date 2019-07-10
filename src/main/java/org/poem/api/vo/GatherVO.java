@@ -8,7 +8,7 @@ import lombok.Data;
  * @author Administrator
  */
 @Data
-@ApiModel("连接信息")
+@ApiModel("数据源连接信息")
 public class GatherVO {
 
     /**

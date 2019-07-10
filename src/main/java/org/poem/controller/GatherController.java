@@ -50,7 +50,7 @@ public class GatherController {
             @ApiResponse(code = 404, message = "请求路径没有找到"),
             @ApiResponse(code = 500, message = "数据库发生错误")
     })
-    @PostMapping(value = "/savgeGather")
+    @PostMapping(value = "/saveGatherInfo")
     public void savgeGather(@RequestBody GatherVO gatherVO) {
         this.metadataService.savgeGather( gatherVO );
     }
