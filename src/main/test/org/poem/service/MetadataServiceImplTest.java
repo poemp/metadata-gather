@@ -8,6 +8,8 @@ import org.poem.MetadataGatherApp;
 import org.poem.api.GatherService;
 import org.poem.api.MetadataService;
 import org.poem.api.vo.*;
+import org.poem.api.vo.query.DbQueryVO;
+import org.poem.api.vo.query.TableQueryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
@@ -30,7 +32,7 @@ public class MetadataServiceImplTest {
     @org.junit.Test
     public void savgeGather() {
         GatherVO gatherVO = new GatherVO();
-        gatherVO.setIp( "192.168.24.250" );
+        gatherVO.setIp( "127.0.0.1" );
         gatherVO.setUserName( "root" );
         gatherVO.setPassword( "123456" );
         gatherVO.setType( "MYSQL" );
@@ -74,7 +76,7 @@ public class MetadataServiceImplTest {
 
     @org.junit.Test
     public void getAllDB() {
-        List<DbVO> dbVOS = metadataService.getAllDB( "346086619914309632" );
+        List<DbVO> dbVOS = metadataService.getAllDB( new DbQueryVO( null, "346086619914309632" ) );
         for (DbVO dbVO : dbVOS) {
             System.out.println( JSONObject.toJSONString( dbVO ) );
         }
@@ -116,7 +118,7 @@ public class MetadataServiceImplTest {
         gatherVOList.forEach(
                 o -> {
                     String gatherId = o.getGatherId();
-                    GatherDBTableFieldsVO gatherDBTableFieldsVO = this.gatherService.getAllGatherDBTableFieldsVO( gatherId );
+                    GatherDBTableFieldsVO gatherDBTableFieldsVO = this.gatherService.getAllGatherDBTableFieldsVO( gatherId , null,null);
                     this.metadataService.saveGather( gatherDBTableFieldsVO );
                 }
         );
@@ -126,7 +128,7 @@ public class MetadataServiceImplTest {
 
     @Test
     public void getAllDataTableFiels1() {
-        GatherDBTableFieldsVO gatherDBTableFieldsVO = this.gatherService.getAllGatherDBTableFieldsVO( "346086619914309632" );
+        GatherDBTableFieldsVO gatherDBTableFieldsVO = this.gatherService.getAllGatherDBTableFieldsVO( "346086619914309632", null ,null);
         this.metadataService.saveGather( gatherDBTableFieldsVO );
     }
 }

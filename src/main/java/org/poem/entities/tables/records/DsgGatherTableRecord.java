@@ -17,7 +17,7 @@ import org.poem.entities.tables.DsgGatherTable;
 
 
 /**
- * 元数据数据表信息
+ * 采集表信息
  */
 @Generated(
     value = {
@@ -29,7 +29,7 @@ import org.poem.entities.tables.DsgGatherTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DsgGatherTableRecord extends UpdatableRecordImpl<DsgGatherTableRecord> implements Record7<String, String, String, String, String, Timestamp, Timestamp> {
 
-    private static final long serialVersionUID = -248674147;
+    private static final long serialVersionUID = -486210454;
 
     /**
      * Setter for <code>kylo.dsg_gather_table.id</code>. id
@@ -60,44 +60,44 @@ public class DsgGatherTableRecord extends UpdatableRecordImpl<DsgGatherTableReco
     }
 
     /**
-     * Setter for <code>kylo.dsg_gather_table.table</code>. 数据库表名字
+     * Setter for <code>kylo.dsg_gather_table.table</code>. 数据库表
      */
     public void setTable_(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>kylo.dsg_gather_table.table</code>. 数据库表名字
+     * Getter for <code>kylo.dsg_gather_table.table</code>. 数据库表
      */
     public String getTable_() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>kylo.dsg_gather_table.name</code>. 数据库表
+     * Setter for <code>kylo.dsg_gather_table.table_name</code>. 数据库表名字
      */
-    public void setName(String value) {
+    public void setTableName(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>kylo.dsg_gather_table.name</code>. 数据库表
+     * Getter for <code>kylo.dsg_gather_table.table_name</code>. 数据库表名字
      */
-    public String getName() {
+    public String getTableName() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>kylo.dsg_gather_table.description</code>. 描述
+     * Setter for <code>kylo.dsg_gather_table.comment</code>. 描述
      */
-    public void setDescription(String value) {
+    public void setComment(String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>kylo.dsg_gather_table.description</code>. 描述
+     * Getter for <code>kylo.dsg_gather_table.comment</code>. 描述
      */
-    public String getDescription() {
+    public String getComment() {
         return (String) get(4);
     }
 
@@ -190,7 +190,7 @@ public class DsgGatherTableRecord extends UpdatableRecordImpl<DsgGatherTableReco
      */
     @Override
     public Field<String> field4() {
-        return DsgGatherTable.DSG_GATHER_TABLE.NAME;
+        return DsgGatherTable.DSG_GATHER_TABLE.TABLE_NAME;
     }
 
     /**
@@ -198,7 +198,7 @@ public class DsgGatherTableRecord extends UpdatableRecordImpl<DsgGatherTableReco
      */
     @Override
     public Field<String> field5() {
-        return DsgGatherTable.DSG_GATHER_TABLE.DESCRIPTION;
+        return DsgGatherTable.DSG_GATHER_TABLE.COMMENT;
     }
 
     /**
@@ -246,7 +246,7 @@ public class DsgGatherTableRecord extends UpdatableRecordImpl<DsgGatherTableReco
      */
     @Override
     public String component4() {
-        return getName();
+        return getTableName();
     }
 
     /**
@@ -254,7 +254,7 @@ public class DsgGatherTableRecord extends UpdatableRecordImpl<DsgGatherTableReco
      */
     @Override
     public String component5() {
-        return getDescription();
+        return getComment();
     }
 
     /**
@@ -302,7 +302,7 @@ public class DsgGatherTableRecord extends UpdatableRecordImpl<DsgGatherTableReco
      */
     @Override
     public String value4() {
-        return getName();
+        return getTableName();
     }
 
     /**
@@ -310,7 +310,7 @@ public class DsgGatherTableRecord extends UpdatableRecordImpl<DsgGatherTableReco
      */
     @Override
     public String value5() {
-        return getDescription();
+        return getComment();
     }
 
     /**
@@ -361,7 +361,7 @@ public class DsgGatherTableRecord extends UpdatableRecordImpl<DsgGatherTableReco
      */
     @Override
     public DsgGatherTableRecord value4(String value) {
-        setName(value);
+        setTableName(value);
         return this;
     }
 
@@ -370,7 +370,7 @@ public class DsgGatherTableRecord extends UpdatableRecordImpl<DsgGatherTableReco
      */
     @Override
     public DsgGatherTableRecord value5(String value) {
-        setDescription(value);
+        setComment(value);
         return this;
     }
 
@@ -421,14 +421,14 @@ public class DsgGatherTableRecord extends UpdatableRecordImpl<DsgGatherTableReco
     /**
      * Create a detached, initialised DsgGatherTableRecord
      */
-    public DsgGatherTableRecord(String id, String gatherDbId, String table, String name, String description, Timestamp createTime, Timestamp updateTime) {
+    public DsgGatherTableRecord(String id, String gatherDbId, String table, String tableName, String comment, Timestamp createTime, Timestamp updateTime) {
         super(DsgGatherTable.DSG_GATHER_TABLE);
 
         set(0, id);
         set(1, gatherDbId);
         set(2, table);
-        set(3, name);
-        set(4, description);
+        set(3, tableName);
+        set(4, comment);
         set(5, createTime);
         set(6, updateTime);
     }

@@ -32,7 +32,7 @@ import org.poem.entities.tables.DsgGatherTableFields;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Kylo extends SchemaImpl {
 
-    private static final long serialVersionUID = -147961186;
+    private static final long serialVersionUID = -1695469656;
 
     /**
      * The reference instance of <code>kylo</code>
@@ -40,7 +40,7 @@ public class Kylo extends SchemaImpl {
     public static final Kylo KYLO = new Kylo();
 
     /**
-     * 元数据数据库信息
+     * 采集到库信息
      */
     public final DsgGatherDb DSG_GATHER_DB = org.poem.entities.tables.DsgGatherDb.DSG_GATHER_DB;
 
@@ -50,12 +50,12 @@ public class Kylo extends SchemaImpl {
     public final DsgGatherInfo DSG_GATHER_INFO = org.poem.entities.tables.DsgGatherInfo.DSG_GATHER_INFO;
 
     /**
-     * 元数据数据表信息
+     * 采集表信息
      */
     public final DsgGatherTable DSG_GATHER_TABLE = org.poem.entities.tables.DsgGatherTable.DSG_GATHER_TABLE;
 
     /**
-     * 元数据表信息
+     * 采集表字端信息
      */
     public final DsgGatherTableFields DSG_GATHER_TABLE_FIELDS = org.poem.entities.tables.DsgGatherTableFields.DSG_GATHER_TABLE_FIELDS;
 

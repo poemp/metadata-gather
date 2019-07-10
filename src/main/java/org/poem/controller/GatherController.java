@@ -41,8 +41,8 @@ public class GatherController {
     }
 
     /**
-     *
-     * @param gatherDBTableFieldsVO
+     * 保存连接信息
+     * @param gatherVO
      */
     @ApiOperation(value = "0102-保存连接信息", notes = "保存连接信息")
     @ApiResponses({
@@ -50,9 +50,9 @@ public class GatherController {
             @ApiResponse(code = 404, message = "请求路径没有找到"),
             @ApiResponse(code = 500, message = "数据库发生错误")
     })
-    @PostMapping(value = "/saveGatherInfo")
-    public void saveGatherInfo(@RequestBody GatherDBTableFieldsVO gatherDBTableFieldsVO) {
-        this.metadataService.saveGather( gatherDBTableFieldsVO );
+    @PostMapping(value = "/savgeGather")
+    public void savgeGather(@RequestBody GatherVO gatherVO) {
+        this.metadataService.savgeGather( gatherVO );
     }
 
     /**
@@ -172,7 +172,8 @@ public class GatherController {
      * 根据信息连接信息获取库
      * @param gatherId
      */
-    @ApiOperation(value = "0109-数据库-根据信息连接信息获取库、表、字端,并且保存到数据库中", notes = "数据库-根据信息连接信息获取库、表、字端,并且保存到数据库中")
+    @ApiOperation(value = "0109-数据库-根据信息连接信息获取库、表、字端,并且保存到数据库中",
+            notes = "数据库-根据信息连接信息获取库、表、字端,并且保存到数据库中")
     @ApiResponses({
             @ApiResponse(code = 400, message = "请求参数没有填好"),
             @ApiResponse(code = 404, message = "请求路径没有找到"),
@@ -180,10 +181,12 @@ public class GatherController {
     })
     @ApiImplicitParams({
             @ApiImplicitParam(name = "gatherId", required = true, value = "连接信息id", dataType = "String", example = "123456"),
+            @ApiImplicitParam(name = "db", required = false, value = "采集的数据库", dataType = "String", example = "test"),
+            @ApiImplicitParam(name = "table", required = false, value = "采集的数据表", dataType = "String", example = "test")
     })
     @PostMapping(value = "/getDbAndTableAndFieldAndSave")
-    public void getDbAndTableAndFieldAndSave(String gatherId) {
-        GatherDBTableFieldsVO gatherDBTableFieldsVO = this.gatherService.getAllGatherDBTableFieldsVO( gatherId );
+    public void getDbAndTableAndFieldAndSave(String gatherId,String  db, String table) {
+        GatherDBTableFieldsVO gatherDBTableFieldsVO = this.gatherService.getAllGatherDBTableFieldsVO( gatherId , db, table);
         this.metadataService.saveGather( gatherDBTableFieldsVO );
     }
 

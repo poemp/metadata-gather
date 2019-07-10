@@ -28,7 +28,7 @@ import org.poem.entities.tables.records.DsgGatherDbRecord;
 
 
 /**
- * 元数据数据库信息
+ * 采集到库信息
  */
 @Generated(
     value = {
@@ -40,7 +40,7 @@ import org.poem.entities.tables.records.DsgGatherDbRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DsgGatherDb extends TableImpl<DsgGatherDbRecord> {
 
-    private static final long serialVersionUID = 1727846891;
+    private static final long serialVersionUID = 742227479;
 
     /**
      * The reference instance of <code>kylo.dsg_gather_db</code>
@@ -69,11 +69,6 @@ public class DsgGatherDb extends TableImpl<DsgGatherDbRecord> {
      * The column <code>kylo.dsg_gather_db.schema</code>. schema
      */
     public final TableField<DsgGatherDbRecord, String> SCHEMA = createField("schema", org.jooq.impl.SQLDataType.VARCHAR(500), this, "schema");
-
-    /**
-     * The column <code>kylo.dsg_gather_db.data_type</code>. 数据类型
-     */
-    public final TableField<DsgGatherDbRecord, String> DATA_TYPE = createField("data_type", org.jooq.impl.SQLDataType.VARCHAR(225), this, "数据类型");
 
     /**
      * The column <code>kylo.dsg_gather_db.description</code>. 描述
@@ -116,7 +111,7 @@ public class DsgGatherDb extends TableImpl<DsgGatherDbRecord> {
     }
 
     private DsgGatherDb(Name alias, Table<DsgGatherDbRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("元数据数据库信息"));
+        super(alias, null, aliased, parameters, DSL.comment("采集到库信息"));
     }
 
     public <O extends Record> DsgGatherDb(Table<O> child, ForeignKey<O, DsgGatherDbRecord> key) {

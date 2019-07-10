@@ -44,8 +44,10 @@ public interface GatherService {
 
 
     /**
+     *  获取 某一个库 某一个表 的某一个列
      * @param gatherId
+     * @param db
      * @return
      */
-    public GatherDBTableFieldsVO getAllGatherDBTableFieldsVO(String gatherId);
+    public GatherDBTableFieldsVO getAllGatherDBTableFieldsVO(String gatherId, String  db, String table);
 }

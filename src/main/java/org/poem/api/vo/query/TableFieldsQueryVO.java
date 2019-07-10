@@ -1,4 +1,4 @@
-package org.poem.api.vo;
+package org.poem.api.vo.query;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

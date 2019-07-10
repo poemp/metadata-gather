@@ -28,7 +28,7 @@ import org.poem.entities.tables.records.DsgGatherTableFieldsRecord;
 
 
 /**
- * 元数据表信息
+ * 采集表字端信息
  */
 @Generated(
     value = {
@@ -40,7 +40,7 @@ import org.poem.entities.tables.records.DsgGatherTableFieldsRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DsgGatherTableFields extends TableImpl<DsgGatherTableFieldsRecord> {
 
-    private static final long serialVersionUID = 985520187;
+    private static final long serialVersionUID = -1597933465;
 
     /**
      * The reference instance of <code>kylo.dsg_gather_table_fields</code>
@@ -66,9 +66,9 @@ public class DsgGatherTableFields extends TableImpl<DsgGatherTableFieldsRecord> 
     public final TableField<DsgGatherTableFieldsRecord, String> GATHER_TABLE_ID = createField("gather_table_id", org.jooq.impl.SQLDataType.VARCHAR(500), this, "表");
 
     /**
-     * The column <code>kylo.dsg_gather_table_fields.field</code>. 字段
+     * The column <code>kylo.dsg_gather_table_fields.field_name</code>. 字段
      */
-    public final TableField<DsgGatherTableFieldsRecord, String> FIELD = createField("field", org.jooq.impl.SQLDataType.VARCHAR(225), this, "字段");
+    public final TableField<DsgGatherTableFieldsRecord, String> FIELD_NAME = createField("field_name", org.jooq.impl.SQLDataType.VARCHAR(225), this, "字段");
 
     /**
      * The column <code>kylo.dsg_gather_table_fields.data_type</code>. 数据类型
@@ -76,14 +76,19 @@ public class DsgGatherTableFields extends TableImpl<DsgGatherTableFieldsRecord> 
     public final TableField<DsgGatherTableFieldsRecord, String> DATA_TYPE = createField("data_type", org.jooq.impl.SQLDataType.VARCHAR(225), this, "数据类型");
 
     /**
-     * The column <code>kylo.dsg_gather_table_fields.description</code>. 描述
+     * The column <code>kylo.dsg_gather_table_fields.column_name</code>. 描述
      */
-    public final TableField<DsgGatherTableFieldsRecord, String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR(225), this, "描述");
+    public final TableField<DsgGatherTableFieldsRecord, String> COLUMN_NAME = createField("column_name", org.jooq.impl.SQLDataType.VARCHAR(225), this, "描述");
 
     /**
      * The column <code>kylo.dsg_gather_table_fields.default_value</code>. 默认值
      */
     public final TableField<DsgGatherTableFieldsRecord, String> DEFAULT_VALUE = createField("default_value", org.jooq.impl.SQLDataType.VARCHAR(225), this, "默认值");
+
+    /**
+     * The column <code>kylo.dsg_gather_table_fields.data_type_length</code>. 数据长度
+     */
+    public final TableField<DsgGatherTableFieldsRecord, String> DATA_TYPE_LENGTH = createField("data_type_length", org.jooq.impl.SQLDataType.VARCHAR(225), this, "数据长度");
 
     /**
      * The column <code>kylo.dsg_gather_table_fields.create_time</code>.
@@ -121,7 +126,7 @@ public class DsgGatherTableFields extends TableImpl<DsgGatherTableFieldsRecord> 
     }
 
     private DsgGatherTableFields(Name alias, Table<DsgGatherTableFieldsRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("元数据表信息"));
+        super(alias, null, aliased, parameters, DSL.comment("采集表字端信息"));
     }
 
     public <O extends Record> DsgGatherTableFields(Table<O> child, ForeignKey<O, DsgGatherTableFieldsRecord> key) {

@@ -5,9 +5,9 @@ import org.jooq.Condition;
 import org.jooq.SortField;
 import org.poem.api.MetadataService;
 import org.poem.api.vo.*;
-import org.poem.api.vo.column.entity.DataSetVO;
-import org.poem.api.vo.databases.entity.DateBaseEntity;
-import org.poem.api.vo.table.entity.TableEntity;
+import org.poem.api.vo.query.DbQueryVO;
+import org.poem.api.vo.query.TableFieldsQueryVO;
+import org.poem.api.vo.query.TableQueryVO;
 import org.poem.dao.gather.GatherInfoDao;
 import org.poem.dao.info.DsgGatherDBDao;
 import org.poem.dao.info.DsgGatherTableDao;
@@ -20,9 +20,6 @@ import org.poem.entities.tables.records.DsgGatherDbRecord;
 import org.poem.entities.tables.records.DsgGatherInfoRecord;
 import org.poem.entities.tables.records.DsgGatherTableFieldsRecord;
 import org.poem.entities.tables.records.DsgGatherTableRecord;
-import org.poem.service.connect.GatherConnection;
-import org.poem.service.databases.GatherDataBaseInter;
-import org.poem.utils.GatherDataSourceUtils;
 import org.poem.utils.SnowFlake;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +28,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.sql.Connection;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
@@ -144,7 +140,6 @@ public class MetadataServiceImpl implements MetadataService {
                     DsgGatherDbRecord dsgGatherDbRecord = new DsgGatherDbRecord();
                     dsgGatherDbRecord.setId( SnowFlake.genId() );
                     dsgGatherDbRecord.setCreateTime( new Timestamp( System.currentTimeMillis() ) );
-                    dsgGatherDbRecord.setDataType( i.getType() );
                     dsgGatherDbRecord.setSchema( o.getName() );
                     dsgGatherDbRecord.setGatherId( gatherInfoId );
                     dsgGatherDbRecord.setDescription( o.getName() );
@@ -157,18 +152,23 @@ public class MetadataServiceImpl implements MetadataService {
     }
 
     /**
-     * @param gatherId
+     * @param dbQueryVO
      * @return
      */
     @Override
-    public List<DbVO> getAllDB(String gatherId) {
-        List<DsgGatherDbRecord> dbRecords = dsgGatherDBDao.findByCondition( DsgGatherDb.DSG_GATHER_DB.GATHER_ID.eq( gatherId ) );
+    public List<DbVO> getAllDB(DbQueryVO dbQueryVO) {
+        List<Condition> conditions = Lists.newArrayList();
+        conditions.add( DsgGatherDb.DSG_GATHER_DB.GATHER_ID.eq( dbQueryVO.getGatherId() ) );
+        if (!StringUtils.isEmpty( dbQueryVO.getName() )){
+            conditions.add( DsgGatherDb.DSG_GATHER_DB.DESCRIPTION.like( "%" + dbQueryVO.getName() + "%" ) );
+        }
+        List<DsgGatherDbRecord> dbRecords = dsgGatherDBDao.findByConditions( conditions );
         return dbRecords.stream()
                 .map(
                         o -> {
                             DbVO dbVO = new DbVO();
                             dbVO.setName( o.getSchema() );
-                            dbVO.setGatherId( gatherId );
+                            dbVO.setGatherId( dbQueryVO.getGatherId() );
                             dbVO.setId( o.getId() );
                             return dbVO;
                         }
@@ -208,8 +208,8 @@ public class MetadataServiceImpl implements MetadataService {
                     tableRecord.setCreateTime( new Timestamp( System.currentTimeMillis() ) );
                     tableRecord.setUpdateTime( new Timestamp( System.currentTimeMillis() ) );
                     tableRecord.setGatherDbId( dbId );
-                    tableRecord.setName( o.getName() );
-                    tableRecord.setDescription( o.getName() + "" + o.getTable() );
+                    tableRecord.setTableName( o.getName() );
+                    tableRecord.setComment( o.getName() + "" + o.getTable() );
                     tableRecord.setTable_( o.getTable() );
                     return tableRecord;
                 }
@@ -229,7 +229,7 @@ public class MetadataServiceImpl implements MetadataService {
         List<Condition> conditions = Lists.newArrayList();
         conditions.add( DsgGatherTable.DSG_GATHER_TABLE.GATHER_DB_ID.eq( tableQueryVO.getDbId() )  );
         if (!StringUtils.isEmpty( tableQueryVO.getName() )){
-            conditions.add( DsgGatherTable.DSG_GATHER_TABLE.NAME.like( "%" + tableQueryVO.getName()  + "%")   );
+            conditions.add( DsgGatherTable.DSG_GATHER_TABLE.TABLE_NAME.like( "%" + tableQueryVO.getName()  + "%")   );
         }
         if (!StringUtils.isEmpty( tableQueryVO.getTableId() )){
             conditions.add( DsgGatherTable.DSG_GATHER_TABLE.ID.eq(tableQueryVO.getTableId())   );
@@ -239,7 +239,7 @@ public class MetadataServiceImpl implements MetadataService {
                 o -> {
                     TableVO tableVO = new TableVO();
                     tableVO.setTable( o.getTable_() );
-                    tableVO.setName( o.getName() );
+                    tableVO.setName( o.getTableName() );
                     tableVO.setDbId( tableQueryVO.getDbId() );
                     tableVO.setId( o.getId() );
                     return tableVO;
@@ -260,19 +260,19 @@ public class MetadataServiceImpl implements MetadataService {
         List<Condition> conditions = Lists.newArrayList();
         conditions.add( DsgGatherTableFields.DSG_GATHER_TABLE_FIELDS.GATHER_TABLE_ID.eq( tableId ) );
         if (!StringUtils.isEmpty( tableFieldsQueryVO.getField() )){
-            conditions.add( DsgGatherTableFields.DSG_GATHER_TABLE_FIELDS.FIELD.eq( tableFieldsQueryVO.getField() ) );
+            conditions.add( DsgGatherTableFields.DSG_GATHER_TABLE_FIELDS.ID.eq( tableFieldsQueryVO.getField() ) );
         }
         if (!StringUtils.isEmpty( tableFieldsQueryVO.getDescription() )){
-            conditions.add( DsgGatherTableFields.DSG_GATHER_TABLE_FIELDS.DESCRIPTION.like( "%" +  tableFieldsQueryVO.getDescription()  + "%") );
+            conditions.add( DsgGatherTableFields.DSG_GATHER_TABLE_FIELDS.FIELD_NAME.like( "%" +  tableFieldsQueryVO.getDescription()  + "%") );
         }
 
         List<DsgGatherTableFieldsRecord> records = this.dsgGatherTableFieldsDao.findByConditions( conditions );
         return records.stream().map(
                 o ->{
                     TableFieldsVO vo = new TableFieldsVO();
-                    vo.setField( o.getField() );
+                    vo.setField( o.getId() );
                     vo.setTableId( tableId );
-                    vo.setDescription( o.getDescription() );
+                    vo.setDescription( o.getColumnName() );
                     vo.setDataType( vo.getDataType() );
                     vo.setDefaultValue( vo.getDefaultValue() );
                     return vo;
@@ -292,9 +292,9 @@ public class MetadataServiceImpl implements MetadataService {
                     fieldsRecord.setId( SnowFlake.genId() );
                     fieldsRecord.setGatherTableId( tableId );
                     fieldsRecord.setDataType( o.getDataType() );
-                    fieldsRecord.setDescription( o.getDescription() );
+                    fieldsRecord.setFieldName( o.getField() );
                     fieldsRecord.setDefaultValue( o.getDefaultValue() );
-                    fieldsRecord.setField( o.getField() );
+                    fieldsRecord.setColumnName( o.getField() );
                     fieldsRecord.setCreateTime( new Timestamp( System.currentTimeMillis() ) );
                     fieldsRecord.setUpdateTime( new Timestamp( System.currentTimeMillis() ) );
                     return fieldsRecord;
@@ -350,11 +350,11 @@ public class MetadataServiceImpl implements MetadataService {
     public GatherDBTableFieldsVO getDBTableAndFields(QueryGatherDBTableFieldsVO queryGatherDBTableFieldsVO) {
         GatherDBTableFieldsVO gatherDBTableFieldsVO = new GatherDBTableFieldsVO();
         List<GatherDBVO> gatherDBVOS = Lists.newArrayList();
-        List<DbVO> dbVOS =  this.getAllDB( queryGatherDBTableFieldsVO.getGratherid() );
+        List<DbVO> dbVOS =  this.getAllDB( new DbQueryVO( queryGatherDBTableFieldsVO.getDb(), queryGatherDBTableFieldsVO.getGratherid() ) );
         for (DbVO dbVO : dbVOS) {
             dbVO.setGatherId( queryGatherDBTableFieldsVO.getGratherid() );
-            List<TableVO> tableVOS =
-                    this.getTable( new TableQueryVO( dbVO.getId(), queryGatherDBTableFieldsVO.getTableId(), queryGatherDBTableFieldsVO.getTable() ));
+            TableQueryVO queryVO =  new TableQueryVO( dbVO.getId(), queryGatherDBTableFieldsVO.getTableId(), queryGatherDBTableFieldsVO.getTable() );
+            List<TableVO> tableVOS = this.getTable( queryVO );
             List<GatherTableVO> gatherTableVOS = Lists.newArrayList();
             for (TableVO tableVO : tableVOS) {
                 GatherTableVO gatherTableVO = new GatherTableVO();

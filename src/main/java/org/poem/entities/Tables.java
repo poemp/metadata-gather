@@ -26,7 +26,7 @@ import org.poem.entities.tables.DsgGatherTableFields;
 public class Tables {
 
     /**
-     * 元数据数据库信息
+     * 采集到库信息
      */
     public static final DsgGatherDb DSG_GATHER_DB = org.poem.entities.tables.DsgGatherDb.DSG_GATHER_DB;
 
@@ -36,12 +36,12 @@ public class Tables {
     public static final DsgGatherInfo DSG_GATHER_INFO = org.poem.entities.tables.DsgGatherInfo.DSG_GATHER_INFO;
 
     /**
-     * 元数据数据表信息
+     * 采集表信息
      */
     public static final DsgGatherTable DSG_GATHER_TABLE = org.poem.entities.tables.DsgGatherTable.DSG_GATHER_TABLE;
 
     /**
-     * 元数据表信息
+     * 采集表字端信息
      */
     public static final DsgGatherTableFields DSG_GATHER_TABLE_FIELDS = org.poem.entities.tables.DsgGatherTableFields.DSG_GATHER_TABLE_FIELDS;
 }

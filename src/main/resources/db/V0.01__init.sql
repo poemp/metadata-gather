@@ -19,7 +19,7 @@ create table `dsg_gather_info`
 
 
 
---  元数据数据库信息
+--  采集到库信息
 drop table if exists `dsg_gather_db`;
 create table `dsg_gather_db`
 (
@@ -31,45 +31,44 @@ create table `dsg_gather_db`
     `update_time`       timestamp NOT NULL  ,
     primary key (`id`)
 ) engine = innodb
-  default charset = utf8 comment ='元数据数据库信息';
+  default charset = utf8 comment ='采集到库信息';
 
 
 
 
---  元数据数据表信息
+--  采集表信息
 drop table if exists `dsg_gather_table`;
 create table `dsg_gather_table`
 (
     `id`                    varchar(50) not null comment 'id',
     `gather_db_id`          varchar(500) not null comment '元数据数据库信息',
-    `table`                 varchar(500) default null comment '数据库表名字',
-    `name`                  varchar(500) default null comment '数据库表',
-    `description`           varchar(225) DEFAULT NULL comment '描述',
+    `table`                 varchar(500) default null comment '数据库表',
+    `table_name`            varchar(500) default null comment '数据库表名字',
+    `comment`               varchar(1000) DEFAULT NULL comment '描述',
     `create_time`           timestamp NOT NULL  ,
     `update_time`           timestamp NOT NULL  ,
     primary key (`id`)
 ) engine = innodb
-  default charset = utf8 comment ='元数据数据表信息';
+  default charset = utf8 comment ='采集表信息';
 
 
---  元数据表信息
+--  采集表字端信息
 drop table if exists `dsg_gather_table_fields`;
 create table `dsg_gather_table_fields`
 (
     `id`                    varchar(50) not null comment 'id',
     `gather_table_id`       varchar(500) default null comment '表',
-    `field`                 varchar(225) DEFAULT NULL comment '字段',
+    `field_name`            varchar(225) DEFAULT NULL comment '字段',
     `data_type`             varchar(225) DEFAULT NULL comment '数据类型',
-    `description`           varchar(225) DEFAULT NULL comment '描述',
+    `column_name`           varchar(225) DEFAULT NULL comment '描述',
     `default_value`         varchar(225) DEFAULT NULL comment '默认值',
+    `data_type_length`      varchar(225) DEFAULT NULL comment '数据长度',
     `create_time`           timestamp NOT NULL  ,
     `update_time`           timestamp NOT NULL  ,
     primary key (`id`)
 ) engine = innodb
-  default charset = utf8 comment ='元数据表信息';
+  default charset = utf8 comment ='采集表字端信息';
 
-ALTER TABLE  `dsg_gather_table`
-    MODIFY COLUMN `description` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述' AFTER `name`;
 
 ALTER TABLE `dsg_gather_info`
     ADD COLUMN `service_name` varchar(255) NULL COMMENT 'oracle 服务名字' AFTER `type`;

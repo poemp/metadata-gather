@@ -1,6 +1,7 @@
 package org.poem.service;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.poem.api.GatherService;
 import org.poem.api.vo.*;
 import org.poem.api.vo.column.entity.DataSetVO;
@@ -138,13 +139,14 @@ public class GatherServiceImpl implements GatherService {
         DsgGatherTableRecord record = this.dsgGatherTableDao.findById( table );
         TableVO tableVO = new TableVO();
         tableVO.setDbId( record.getGatherDbId() );
-        tableVO.setName( record.getName() );
+        tableVO.setName( record.getTableName() );
         tableVO.setTable( record.getTable_() );
         tableVO.setId( record.getId() );
         return tableVO;
     }
 
     /**
+     *
      * @param tableVO
      * @return
      */
@@ -182,7 +184,7 @@ public class GatherServiceImpl implements GatherService {
      * @return
      */
     @Override
-    public GatherDBTableFieldsVO getAllGatherDBTableFieldsVO(String gatherId) {
+    public GatherDBTableFieldsVO getAllGatherDBTableFieldsVO(String gatherId, String  db, String table) {
         GatherDBTableFieldsVO gatherDBTableFieldsVO = new GatherDBTableFieldsVO();
         GatherConnection n = this.getGatherConnection( gatherId );
         Connection connection = n.getConnection();
@@ -193,6 +195,9 @@ public class GatherServiceImpl implements GatherService {
             DbVO dbVO = new DbVO();
             dbVO.setGatherId( gatherId );
             dbVO.setName( dateBaseEntity.getDatabaseName() );
+            if (!StringUtils.isBlank( db ) &&  ! db.equals(  dateBaseEntity.getDatabaseName() )){
+                continue;
+            }
             List<TableEntity> tableEntities = gatherDataBaseInter.getAllTableName( dateBaseEntity.getDatabaseName(), connection );
             List<GatherTableVO> gatherTableVOS = Lists.newArrayList();
             for (TableEntity tableEntity : tableEntities) {
@@ -200,6 +205,9 @@ public class GatherServiceImpl implements GatherService {
                 tableVO.setDbId( null );
                 tableVO.setName( tableEntity.getComment() );
                 tableVO.setTable( tableEntity.getTableName() );
+                if (!StringUtils.isBlank( table ) &&  ! table.equals(   tableEntity.getTableName() )){
+                    continue;
+                }
                 DataSetVO dataSetVO = gatherDataBaseInter .getTaleFields( dateBaseEntity.getDatabaseName(), tableEntity.getTableName(), connection );
                 List<TableFieldsVO> tableFieldsVOS = dataSetVO.getDatas().stream().map(
                         list -> {

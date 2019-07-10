@@ -1,6 +1,9 @@
 package org.poem.api;
 
 import org.poem.api.vo.*;
+import org.poem.api.vo.query.DbQueryVO;
+import org.poem.api.vo.query.TableFieldsQueryVO;
+import org.poem.api.vo.query.TableQueryVO;
 import org.poem.entities.tables.records.DsgGatherDbRecord;
 import org.poem.entities.tables.records.DsgGatherTableFieldsRecord;
 import org.poem.entities.tables.records.DsgGatherTableRecord;
@@ -39,10 +42,10 @@ public interface MetadataService {
 
 
     /**
-     * @param gatherId
+     * @param dbQueryVO
      * @return
      */
-    List<DbVO> getAllDB(String gatherId);
+    List<DbVO> getAllDB(DbQueryVO dbQueryVO);
 
     /**
      * @param tableVOS
@@ -53,7 +56,7 @@ public interface MetadataService {
      * @param tableQueryVO
      * @return
      */
-    List<TableVO> getTable(TableQueryVO  tableQueryVO);
+    List<TableVO> getTable(TableQueryVO tableQueryVO);
 
 
     /**
