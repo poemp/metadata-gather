@@ -8,6 +8,7 @@ import javax.annotation.Generated;
 
 import org.poem.entities.tables.DsgGatherDb;
 import org.poem.entities.tables.DsgGatherInfo;
+import org.poem.entities.tables.DsgGatherStatistics;
 import org.poem.entities.tables.DsgGatherTable;
 import org.poem.entities.tables.DsgGatherTableFields;
 
@@ -34,6 +35,11 @@ public class Tables {
      * 元数据采集信息
      */
     public static final DsgGatherInfo DSG_GATHER_INFO = org.poem.entities.tables.DsgGatherInfo.DSG_GATHER_INFO;
+
+    /**
+     * 采集表信息
+     */
+    public static final DsgGatherStatistics DSG_GATHER_STATISTICS = org.poem.entities.tables.DsgGatherStatistics.DSG_GATHER_STATISTICS;
 
     /**
      * 采集表信息

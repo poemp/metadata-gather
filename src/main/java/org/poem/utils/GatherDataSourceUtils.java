@@ -3,7 +3,7 @@ package org.poem.utils;
 import org.poem.service.connect.DataType;
 import org.poem.service.databases.GatherDataBaseInter;
 import org.poem.service.databases.MysqlGatherData;
-import org.poem.service.databases.OrcaleGatherData;
+import org.poem.service.databases.OracleGatherData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +53,7 @@ public class GatherDataSourceUtils {
         if (DataType.MYSQL.eq( dataType )) {
             return SpringUtils.getBean( MysqlGatherData.BEAN, MysqlGatherData.class );
         } else if (DataType.ORACLE.eq( dataType )) {
-            return SpringUtils.getBean( OrcaleGatherData.BEAN, OrcaleGatherData.class );
+            return SpringUtils.getBean( OracleGatherData.BEAN, OracleGatherData.class );
         } else {
             throw new IllegalArgumentException( "not unrecognizable type[" + dataType + "] !!!!!!!!!" );
         }

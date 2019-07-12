@@ -18,12 +18,12 @@ import java.util.List;
 /**
  * @author Administrator
  */
-@Service(OrcaleGatherData.BEAN)
-public class OrcaleGatherData extends AbstractGatherDataBaseInter {
+@Service(OracleGatherData.BEAN)
+public class OracleGatherData extends AbstractGatherDataBaseInter {
 
-    public static final String BEAN = "orcale_gather_data";
+    public static final String BEAN = "oracle_gather_data";
 
-    private static final Logger logger = LoggerFactory.getLogger( OrcaleGatherData.class );
+    private static final Logger logger = LoggerFactory.getLogger( OracleGatherData.class );
 
 
     /**

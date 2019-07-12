@@ -15,6 +15,7 @@ import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 import org.poem.entities.tables.DsgGatherDb;
 import org.poem.entities.tables.DsgGatherInfo;
+import org.poem.entities.tables.DsgGatherStatistics;
 import org.poem.entities.tables.DsgGatherTable;
 import org.poem.entities.tables.DsgGatherTableFields;
 
@@ -32,7 +33,7 @@ import org.poem.entities.tables.DsgGatherTableFields;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Kylo extends SchemaImpl {
 
-    private static final long serialVersionUID = -1695469656;
+    private static final long serialVersionUID = 703595012;
 
     /**
      * The reference instance of <code>kylo</code>
@@ -48,6 +49,11 @@ public class Kylo extends SchemaImpl {
      * 元数据采集信息
      */
     public final DsgGatherInfo DSG_GATHER_INFO = org.poem.entities.tables.DsgGatherInfo.DSG_GATHER_INFO;
+
+    /**
+     * 采集表信息
+     */
+    public final DsgGatherStatistics DSG_GATHER_STATISTICS = org.poem.entities.tables.DsgGatherStatistics.DSG_GATHER_STATISTICS;
 
     /**
      * 采集表信息
@@ -86,6 +92,7 @@ public class Kylo extends SchemaImpl {
         return Arrays.<Table<?>>asList(
             DsgGatherDb.DSG_GATHER_DB,
             DsgGatherInfo.DSG_GATHER_INFO,
+            DsgGatherStatistics.DSG_GATHER_STATISTICS,
             DsgGatherTable.DSG_GATHER_TABLE,
             DsgGatherTableFields.DSG_GATHER_TABLE_FIELDS);
     }

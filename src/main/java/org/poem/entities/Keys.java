@@ -10,10 +10,12 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.Internal;
 import org.poem.entities.tables.DsgGatherDb;
 import org.poem.entities.tables.DsgGatherInfo;
+import org.poem.entities.tables.DsgGatherStatistics;
 import org.poem.entities.tables.DsgGatherTable;
 import org.poem.entities.tables.DsgGatherTableFields;
 import org.poem.entities.tables.records.DsgGatherDbRecord;
 import org.poem.entities.tables.records.DsgGatherInfoRecord;
+import org.poem.entities.tables.records.DsgGatherStatisticsRecord;
 import org.poem.entities.tables.records.DsgGatherTableFieldsRecord;
 import org.poem.entities.tables.records.DsgGatherTableRecord;
 
@@ -43,6 +45,7 @@ public class Keys {
 
     public static final UniqueKey<DsgGatherDbRecord> KEY_DSG_GATHER_DB_PRIMARY = UniqueKeys0.KEY_DSG_GATHER_DB_PRIMARY;
     public static final UniqueKey<DsgGatherInfoRecord> KEY_DSG_GATHER_INFO_PRIMARY = UniqueKeys0.KEY_DSG_GATHER_INFO_PRIMARY;
+    public static final UniqueKey<DsgGatherStatisticsRecord> KEY_DSG_GATHER_STATISTICS_PRIMARY = UniqueKeys0.KEY_DSG_GATHER_STATISTICS_PRIMARY;
     public static final UniqueKey<DsgGatherTableRecord> KEY_DSG_GATHER_TABLE_PRIMARY = UniqueKeys0.KEY_DSG_GATHER_TABLE_PRIMARY;
     public static final UniqueKey<DsgGatherTableFieldsRecord> KEY_DSG_GATHER_TABLE_FIELDS_PRIMARY = UniqueKeys0.KEY_DSG_GATHER_TABLE_FIELDS_PRIMARY;
 
@@ -58,6 +61,7 @@ public class Keys {
     private static class UniqueKeys0 {
         public static final UniqueKey<DsgGatherDbRecord> KEY_DSG_GATHER_DB_PRIMARY = Internal.createUniqueKey(DsgGatherDb.DSG_GATHER_DB, "KEY_dsg_gather_db_PRIMARY", DsgGatherDb.DSG_GATHER_DB.ID);
         public static final UniqueKey<DsgGatherInfoRecord> KEY_DSG_GATHER_INFO_PRIMARY = Internal.createUniqueKey(DsgGatherInfo.DSG_GATHER_INFO, "KEY_dsg_gather_info_PRIMARY", DsgGatherInfo.DSG_GATHER_INFO.ID);
+        public static final UniqueKey<DsgGatherStatisticsRecord> KEY_DSG_GATHER_STATISTICS_PRIMARY = Internal.createUniqueKey(DsgGatherStatistics.DSG_GATHER_STATISTICS, "KEY_dsg_gather_statistics_PRIMARY", DsgGatherStatistics.DSG_GATHER_STATISTICS.ID);
         public static final UniqueKey<DsgGatherTableRecord> KEY_DSG_GATHER_TABLE_PRIMARY = Internal.createUniqueKey(DsgGatherTable.DSG_GATHER_TABLE, "KEY_dsg_gather_table_PRIMARY", DsgGatherTable.DSG_GATHER_TABLE.ID);
         public static final UniqueKey<DsgGatherTableFieldsRecord> KEY_DSG_GATHER_TABLE_FIELDS_PRIMARY = Internal.createUniqueKey(DsgGatherTableFields.DSG_GATHER_TABLE_FIELDS, "KEY_dsg_gather_table_fields_PRIMARY", DsgGatherTableFields.DSG_GATHER_TABLE_FIELDS.ID);
     }

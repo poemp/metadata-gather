@@ -11,6 +11,7 @@ import org.jooq.OrderField;
 import org.jooq.impl.Internal;
 import org.poem.entities.tables.DsgGatherDb;
 import org.poem.entities.tables.DsgGatherInfo;
+import org.poem.entities.tables.DsgGatherStatistics;
 import org.poem.entities.tables.DsgGatherTable;
 import org.poem.entities.tables.DsgGatherTableFields;
 
@@ -34,6 +35,7 @@ public class Indexes {
 
     public static final Index DSG_GATHER_DB_PRIMARY = Indexes0.DSG_GATHER_DB_PRIMARY;
     public static final Index DSG_GATHER_INFO_PRIMARY = Indexes0.DSG_GATHER_INFO_PRIMARY;
+    public static final Index DSG_GATHER_STATISTICS_PRIMARY = Indexes0.DSG_GATHER_STATISTICS_PRIMARY;
     public static final Index DSG_GATHER_TABLE_PRIMARY = Indexes0.DSG_GATHER_TABLE_PRIMARY;
     public static final Index DSG_GATHER_TABLE_FIELDS_PRIMARY = Indexes0.DSG_GATHER_TABLE_FIELDS_PRIMARY;
 
@@ -44,6 +46,7 @@ public class Indexes {
     private static class Indexes0 {
         public static Index DSG_GATHER_DB_PRIMARY = Internal.createIndex("PRIMARY", DsgGatherDb.DSG_GATHER_DB, new OrderField[] { DsgGatherDb.DSG_GATHER_DB.ID }, true);
         public static Index DSG_GATHER_INFO_PRIMARY = Internal.createIndex("PRIMARY", DsgGatherInfo.DSG_GATHER_INFO, new OrderField[] { DsgGatherInfo.DSG_GATHER_INFO.ID }, true);
+        public static Index DSG_GATHER_STATISTICS_PRIMARY = Internal.createIndex("PRIMARY", DsgGatherStatistics.DSG_GATHER_STATISTICS, new OrderField[] { DsgGatherStatistics.DSG_GATHER_STATISTICS.ID }, true);
         public static Index DSG_GATHER_TABLE_PRIMARY = Internal.createIndex("PRIMARY", DsgGatherTable.DSG_GATHER_TABLE, new OrderField[] { DsgGatherTable.DSG_GATHER_TABLE.ID }, true);
         public static Index DSG_GATHER_TABLE_FIELDS_PRIMARY = Internal.createIndex("PRIMARY", DsgGatherTableFields.DSG_GATHER_TABLE_FIELDS, new OrderField[] { DsgGatherTableFields.DSG_GATHER_TABLE_FIELDS.ID }, true);
     }

@@ -72,3 +72,20 @@ create table `dsg_gather_table_fields`
 
 ALTER TABLE `dsg_gather_info`
     ADD COLUMN `service_name` varchar(255) NULL COMMENT 'oracle 服务名字' AFTER `type`;
+
+
+
+--  采集的统计信息
+drop table if exists `dsg_gather_statistics`;
+create table `dsg_gather_statistics`
+(
+    `id`                    varchar(50) not null comment 'id',
+    `gather_info_id`        varchar(500) not null comment '元数据信息, 和任务在一起',
+    `gather_db_count`       int(5) not null comment '抓取的数据库数量',
+    `gather_table_count`    int(5) not null comment '抓取的表的个数',
+    `gather_field_count`    int(5) not null comment '抓取的表列的个数',
+    `create_time`           timestamp NOT NULL  ,
+    `update_time`           timestamp NOT NULL  ,
+    primary key (`id`)
+) engine = innodb
+  default charset = utf8 comment ='采集表信息';
