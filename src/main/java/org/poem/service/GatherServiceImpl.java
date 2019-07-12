@@ -2,10 +2,12 @@ package org.poem.service;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
+import org.poem.api.DsggatherStatisticsService;
 import org.poem.api.GatherService;
 import org.poem.api.vo.*;
 import org.poem.api.vo.column.entity.DataSetVO;
 import org.poem.api.vo.databases.entity.DateBaseEntity;
+import org.poem.api.vo.statistics.DsggatherStatisticsVO;
 import org.poem.api.vo.table.entity.TableEntity;
 import org.poem.dao.gather.GatherInfoDao;
 import org.poem.dao.info.DsgGatherDBDao;
@@ -45,6 +47,10 @@ public class GatherServiceImpl implements GatherService {
 
     @Autowired
     private DsgGatherTableDao dsgGatherTableDao;
+
+
+    @Autowired
+    private DsggatherStatisticsService dsggatherStatisticsService;
 
     /**
      * @param gatherId
@@ -94,6 +100,7 @@ public class GatherServiceImpl implements GatherService {
         List<DateBaseEntity> dateBaseEntities = gatherDataBaseInter.getDataBases( connection.getConnection() );
         return dateBaseEntities.stream().map(
                 o -> {
+                    dsggatherStatisticsService.saveCurrent( new DsggatherStatisticsVO( gatherId, 1, 0, 0  ) );
                     DbVO dbVO = new DbVO();
                     dbVO.setGatherId( gatherId );
                     dbVO.setName( o.getDatabaseName() );
@@ -120,6 +127,7 @@ public class GatherServiceImpl implements GatherService {
                 .getAllTableName( dsgGatherDbRecord.getSchema(), connection.getConnection() );
         return tableEntities.stream().map(
                 o -> {
+                    dsggatherStatisticsService.saveCurrent( new DsggatherStatisticsVO( gatherVO.getGatherId(), 0, 1, 0  ) );
                     TableVO tableVO = new TableVO();
                     tableVO.setDbId( gatherVO.getId() );
                     tableVO.setName( o.getComment() );
@@ -167,6 +175,7 @@ public class GatherServiceImpl implements GatherService {
                 .getTaleFields( dbRecord.getSchema(), tableRecord.getTable_(), connection.getConnection() );
         return setVO.getDatas().stream().map(
                 list -> {
+                    dsggatherStatisticsService.saveCurrent( new DsggatherStatisticsVO( dbRecord.getGatherId(), 0, 0, 1 ) );
                     String columnName = String.valueOf( list.get( 0 ) );
                     String type = String.valueOf( list.get( 1 ) );
                     String name = String.valueOf( list.get( 2 ) );

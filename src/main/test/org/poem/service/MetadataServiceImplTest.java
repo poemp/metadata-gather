@@ -48,6 +48,7 @@ public class MetadataServiceImplTest {
         gatherVO.setUserName( "dsg" );
         gatherVO.setPassword( "dsg" );
         gatherVO.setType( "ORACLE" );
+        gatherVO.setServerName( "DB112A" );
         gatherVO.setPort( "1521" );
         gatherVO.setName( "测试 ORACLE 数据库" );
         metadataService.savgeGather( gatherVO );
