@@ -44,6 +44,9 @@ eureka:
     serviceUrl:
       defaultZone: http://${global.eureka.host}:${global.eureka.port}/eureka/
 logging:
+  gather:
+    storage: ${global.gather.logger.storage}
+    path: ${global.gather.logger.path}
   level:
     root: info
 

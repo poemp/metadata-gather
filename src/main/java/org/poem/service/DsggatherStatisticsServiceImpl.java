@@ -98,7 +98,7 @@ public class DsggatherStatisticsServiceImpl implements DsggatherStatisticsServic
         dsgGatherStatisticsRecord.setGatherDbCount( dsgGatherStatisticsRecord.getGatherDbCount() + dsggatherStatisticsVO.getDbCount() );
         dsgGatherStatisticsRecord.setGatherFieldCount( dsgGatherStatisticsRecord.getGatherFieldCount() + dsggatherStatisticsVO.getFieldCount() );
         dsgGatherStatisticsRecord.setUpdateTime( new Timestamp( System.currentTimeMillis() ) );
-        if (!CollectionUtils.isEmpty( records )) {
+        if (CollectionUtils.isEmpty( records )) {
             this.dsggatherStatisticsDao.insert( dsgGatherStatisticsRecord );
         } else {
             this.dsggatherStatisticsDao.update( dsgGatherStatisticsRecord );

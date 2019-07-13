@@ -20,6 +20,7 @@ import org.poem.entities.tables.records.DsgGatherDbRecord;
 import org.poem.entities.tables.records.DsgGatherInfoRecord;
 import org.poem.entities.tables.records.DsgGatherTableFieldsRecord;
 import org.poem.entities.tables.records.DsgGatherTableRecord;
+import org.poem.loghelper.LoggerHelper;
 import org.poem.utils.SnowFlake;
 import org.poem.utils.ThreadUtils;
 import org.slf4j.Logger;
@@ -53,6 +54,9 @@ public class MetadataServiceImpl implements MetadataService {
 
     @Autowired
     private DsgGatherTableFieldsDao dsgGatherTableFieldsDao;
+
+    @Autowired
+    private LoggerHelper loggerHelper;
 
     /**
      * @param gatherVO
@@ -330,9 +334,11 @@ public class MetadataServiceImpl implements MetadataService {
         deleteAllDataGatherInfoId( gatherId );
         for (GatherDBVO dbvo : gatherDBTableFieldsVO.getGatherDBVOS()) {
             logger.info( "" + dbvo.getDbVO().getName() );
+            loggerHelper.info(dbvo.getDbVO().getName());
             List<DsgGatherDbRecord> dsgGatherDbRecords = this.saveDB( Collections.singletonList( dbvo.getDbVO() ), gatherId );
             for (GatherTableVO gatherTableVO : dbvo.getGatherTableVOS()) {
                 logger.info( "\t\t\t" + gatherTableVO.getTableVO().getTable() + " " + gatherTableVO.getTableVO().getName() );
+                loggerHelper.info( "\t\t\t" + gatherTableVO.getTableVO().getTable() + " " + gatherTableVO.getTableVO().getName());
                 List<DsgGatherTableRecord> tableRecords =
                         this.saveTable( Collections.singletonList( gatherTableVO.getTableVO() ), dsgGatherDbRecords.get( 0 ).getId() );
                 this.saveTableFields( gatherTableVO.getTableFieldsVOS(), tableRecords.get( 0 ).getId() );

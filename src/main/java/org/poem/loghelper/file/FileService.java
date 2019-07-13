@@ -2,6 +2,7 @@ package org.poem.loghelper.file;
 
 /**
  * 文件
+ * @author Administrator
  */
 public interface FileService {
 

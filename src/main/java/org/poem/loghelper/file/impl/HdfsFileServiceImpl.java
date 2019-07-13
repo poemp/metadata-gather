@@ -2,11 +2,15 @@ package org.poem.loghelper.file.impl;
 
 import org.poem.loghelper.file.FileService;
 import org.poem.utils.HdfsUtils;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Service;
 
 /**
  * hdfs file service
  * @author Administrator
  */
+@Service
+@ConditionalOnProperty(name = "logging.gather.storage",havingValue = "HDFS")
 public class HdfsFileServiceImpl implements FileService {
 
 

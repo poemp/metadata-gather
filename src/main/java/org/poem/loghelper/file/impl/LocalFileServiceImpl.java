@@ -6,6 +6,8 @@ import org.fusesource.hawtbuf.BufferInputStream;
 import org.poem.loghelper.file.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -13,6 +15,11 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.attribute.FileAttribute;
 
+/**
+ * @author Administrator
+ */
+@Service
+@ConditionalOnProperty(name = "logging.gather.storage",havingValue = "LOCAL")
 public class LocalFileServiceImpl implements FileService {
 
 
@@ -30,6 +37,9 @@ public class LocalFileServiceImpl implements FileService {
         if (StringUtils.isBlank( content )) {
             logger.warn( "content is empty" );
             return;
+        }
+        if (StringUtils.isBlank( path )){
+            path = System.getProperty("user.dir");
         }
         BufferInputStream fin = null;
         FileOutputStream fout = null;
@@ -74,6 +84,9 @@ public class LocalFileServiceImpl implements FileService {
      */
     @Override
     public String read(String path, String fileName) {
+        if (StringUtils.isBlank( path )){
+            path = System.getProperty("user.dir");
+        }
         if (!new File( path ).exists()) {
             logger.warn( "[" + path + "] not exist!!!!!!" );
             return "";

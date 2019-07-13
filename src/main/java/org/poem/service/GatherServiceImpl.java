@@ -207,6 +207,7 @@ public class GatherServiceImpl implements GatherService {
             if (!StringUtils.isBlank( db ) &&  ! db.equals(  dateBaseEntity.getDatabaseName() )){
                 continue;
             }
+            dsggatherStatisticsService.saveCurrent( new DsggatherStatisticsVO( gatherId, 1, 0, 0  ) );
             List<TableEntity> tableEntities = gatherDataBaseInter.getAllTableName( dateBaseEntity.getDatabaseName(), connection );
             List<GatherTableVO> gatherTableVOS = Lists.newArrayList();
             for (TableEntity tableEntity : tableEntities) {
@@ -217,6 +218,7 @@ public class GatherServiceImpl implements GatherService {
                 if (!StringUtils.isBlank( table ) &&  ! table.equals(   tableEntity.getTableName() )){
                     continue;
                 }
+                dsggatherStatisticsService.saveCurrent( new DsggatherStatisticsVO( gatherId, 0, 1, 0  ) );
                 DataSetVO dataSetVO = gatherDataBaseInter .getTaleFields( dateBaseEntity.getDatabaseName(), tableEntity.getTableName(), connection );
                 List<TableFieldsVO> tableFieldsVOS = dataSetVO.getDatas().stream().map(
                         list -> {
@@ -228,6 +230,7 @@ public class GatherServiceImpl implements GatherService {
                             fieldsVO.setDescription( name );
                             fieldsVO.setTableId( tableVO.getId() );
                             fieldsVO.setField( columnName );
+                            dsggatherStatisticsService.saveCurrent( new DsggatherStatisticsVO( gatherId, 0, 0, 1  ) );
                             return fieldsVO;
                         }
                 ).collect( Collectors.toList() );

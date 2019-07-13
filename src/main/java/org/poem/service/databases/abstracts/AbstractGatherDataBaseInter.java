@@ -32,8 +32,6 @@ public abstract class AbstractGatherDataBaseInter  implements GatherDataBaseInte
      * @param all
      * @return
      */
-
-
     public static String parse(String all) {
         String comment = null;
         int index = all.indexOf( "COMMENT='" );

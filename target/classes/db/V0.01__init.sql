@@ -43,7 +43,7 @@ create table `dsg_gather_table`
     `id`                    varchar(50) not null comment 'id',
     `gather_db_id`          varchar(500) not null comment '元数据数据库信息',
     `table`                 varchar(500) default null comment '数据库表',
-    `table_name`            varchar(500) default null comment '数据库表名字',
+    `table_name`            varchar(1000) default null comment '数据库表名字',
     `comment`               varchar(1000) DEFAULT NULL comment '描述',
     `create_time`           timestamp NOT NULL  ,
     `update_time`           timestamp NOT NULL  ,
