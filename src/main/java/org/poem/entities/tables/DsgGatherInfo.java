@@ -40,7 +40,7 @@ import org.poem.entities.tables.records.DsgGatherInfoRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DsgGatherInfo extends TableImpl<DsgGatherInfoRecord> {
 
-    private static final long serialVersionUID = -877766674;
+    private static final long serialVersionUID = -1641434727;
 
     /**
      * The reference instance of <code>kylo.dsg_gather_info</code>
@@ -104,6 +104,11 @@ public class DsgGatherInfo extends TableImpl<DsgGatherInfoRecord> {
      * The column <code>kylo.dsg_gather_info.delete</code>. 是否删除
      */
     public final TableField<DsgGatherInfoRecord, Byte> DELETE = createField("delete", org.jooq.impl.SQLDataType.TINYINT, this, "是否删除");
+
+    /**
+     * The column <code>kylo.dsg_gather_info.status</code>. 状态 0 没有启动  1 启动
+     */
+    public final TableField<DsgGatherInfoRecord, Integer> STATUS = createField("status", org.jooq.impl.SQLDataType.INTEGER, this, "状态 0 没有启动  1 启动");
 
     /**
      * The column <code>kylo.dsg_gather_info.create_time</code>.

@@ -54,9 +54,7 @@ public class LocalFileServiceImpl implements FileService {
                 Files.createFile( dst.toPath(), NO_ATTRIBUTES );
             }
             fin = new BufferInputStream( content.getBytes() );
-            fout = new FileOutputStream( dst );
-            // 从FileInputStream创建用于输入的FileChannel
-            // 从FileOutputStream 创建用于输出的FileChannel
+            fout = new FileOutputStream( dst , true);
             foc = fout.getChannel();
             // 16KB缓冲区
             byte[] bb = new byte[1024 << 4];

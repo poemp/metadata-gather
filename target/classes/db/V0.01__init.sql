@@ -75,6 +75,10 @@ ALTER TABLE `dsg_gather_info`
 
 
 
+ALTER TABLE `dsg_gather_info`
+    ADD COLUMN `status` int(3) NULL COMMENT '状态 0 没有启动  1 启动' AFTER `delete`;
+
+
 --  采集的统计信息
 drop table if exists `dsg_gather_statistics`;
 create table `dsg_gather_statistics`

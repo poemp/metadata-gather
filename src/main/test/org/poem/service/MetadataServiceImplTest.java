@@ -119,7 +119,8 @@ public class MetadataServiceImplTest {
         gatherVOList.forEach(
                 o -> {
                     String gatherId = o.getGatherId();
-                    GatherDBTableFieldsVO gatherDBTableFieldsVO = this.gatherService.getAllGatherDBTableFieldsVO( gatherId , null,null);
+                    GatherDBTableFieldsVO gatherDBTableFieldsVO = this.gatherService.getAllGatherDBTableFieldsVO( gatherId ,
+                            null,null);
                     this.metadataService.saveGather( gatherDBTableFieldsVO );
                 }
         );
@@ -129,7 +130,8 @@ public class MetadataServiceImplTest {
 
     @Test
     public void getAllDataTableFiels1() {
-        GatherDBTableFieldsVO gatherDBTableFieldsVO = this.gatherService.getAllGatherDBTableFieldsVO( "346086619914309632", null ,null);
+        GatherDBTableFieldsVO gatherDBTableFieldsVO =
+                this.gatherService.getAllGatherDBTableFieldsVO( "346086619914309632", null ,null);
         this.metadataService.saveGather( gatherDBTableFieldsVO );
     }
 }

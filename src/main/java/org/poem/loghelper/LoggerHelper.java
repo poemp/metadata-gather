@@ -2,6 +2,7 @@ package org.poem.loghelper;
 
 
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 import org.poem.loghelper.file.FileService;
 import org.poem.utils.ThreadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class LoggerHelper {
     @Value( "${logging.gather.storage}" )
     private static String storage;
 
-    @Value( "${logging.gather.path:./}" )
+    @Value( "${logging.gather.path}" )
     private static String path;
 
     /**
@@ -32,7 +33,11 @@ public class LoggerHelper {
      */
     public void  info(String content){
        String gatherId = ThreadUtils.getTaskId().get();
-        fileService.write( path, gatherId, content );
+       if (StringUtils.isEmpty(content)){
+           content += "";
+       }
+       content += "\n";
+        fileService.write( path, gatherId + ".log", content );
     }
 
 }

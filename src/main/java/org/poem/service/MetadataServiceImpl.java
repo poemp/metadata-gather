@@ -331,20 +331,22 @@ public class MetadataServiceImpl implements MetadataService {
     @Override
     public void saveGather(GatherDBTableFieldsVO gatherDBTableFieldsVO) {
         String gatherId = gatherDBTableFieldsVO.getGratherid();
+        ThreadUtils.setTaskId( gatherId );
+        this.gatherInfoDao.updateOneFieldById( gatherDBTableFieldsVO.getGratherid(), DsgGatherInfo.DSG_GATHER_INFO.STATUS, 0 );
         deleteAllDataGatherInfoId( gatherId );
         for (GatherDBVO dbvo : gatherDBTableFieldsVO.getGatherDBVOS()) {
             logger.info( "" + dbvo.getDbVO().getName() );
-            loggerHelper.info(dbvo.getDbVO().getName());
+            loggerHelper.info( dbvo.getDbVO().getName() );
             List<DsgGatherDbRecord> dsgGatherDbRecords = this.saveDB( Collections.singletonList( dbvo.getDbVO() ), gatherId );
             for (GatherTableVO gatherTableVO : dbvo.getGatherTableVOS()) {
                 logger.info( "\t\t\t" + gatherTableVO.getTableVO().getTable() + " " + gatherTableVO.getTableVO().getName() );
-                loggerHelper.info( "\t\t\t" + gatherTableVO.getTableVO().getTable() + " " + gatherTableVO.getTableVO().getName());
+                loggerHelper.info( "\t\t\t" + gatherTableVO.getTableVO().getTable() + " " + gatherTableVO.getTableVO().getName() );
                 List<DsgGatherTableRecord> tableRecords =
                         this.saveTable( Collections.singletonList( gatherTableVO.getTableVO() ), dsgGatherDbRecords.get( 0 ).getId() );
                 this.saveTableFields( gatherTableVO.getTableFieldsVOS(), tableRecords.get( 0 ).getId() );
             }
         }
-
+        this.gatherInfoDao.updateOneFieldById( gatherDBTableFieldsVO.getGratherid(), DsgGatherInfo.DSG_GATHER_INFO.STATUS, 0 );
     }
 
     /**

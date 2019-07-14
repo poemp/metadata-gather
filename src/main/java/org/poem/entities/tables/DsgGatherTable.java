@@ -40,7 +40,7 @@ import org.poem.entities.tables.records.DsgGatherTableRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DsgGatherTable extends TableImpl<DsgGatherTableRecord> {
 
-    private static final long serialVersionUID = -910972449;
+    private static final long serialVersionUID = 1689055397;
 
     /**
      * The reference instance of <code>kylo.dsg_gather_table</code>
@@ -73,7 +73,7 @@ public class DsgGatherTable extends TableImpl<DsgGatherTableRecord> {
     /**
      * The column <code>kylo.dsg_gather_table.table_name</code>. 数据库表名字
      */
-    public final TableField<DsgGatherTableRecord, String> TABLE_NAME = createField("table_name", org.jooq.impl.SQLDataType.VARCHAR(500), this, "数据库表名字");
+    public final TableField<DsgGatherTableRecord, String> TABLE_NAME = createField("table_name", org.jooq.impl.SQLDataType.VARCHAR(1000), this, "数据库表名字");
 
     /**
      * The column <code>kylo.dsg_gather_table.comment</code>. 描述

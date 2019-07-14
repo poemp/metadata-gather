@@ -79,7 +79,7 @@ public class DsggatherStatisticsServiceImpl implements DsggatherStatisticsServic
      * @param dsggatherStatisticsVO
      */
     @Override
-    public void save(DsggatherStatisticsVO dsggatherStatisticsVO) {
+    public synchronized void  save(DsggatherStatisticsVO dsggatherStatisticsVO) {
         List<DsgGatherStatisticsRecord> records =
                 dsggatherStatisticsDao.findByCondition( DsgGatherStatistics.DSG_GATHER_STATISTICS.GATHER_INFO_ID.eq( dsggatherStatisticsVO.getGatherId() ) );
         DsgGatherStatisticsRecord dsgGatherStatisticsRecord;
@@ -92,6 +92,7 @@ public class DsggatherStatisticsServiceImpl implements DsggatherStatisticsServic
             dsgGatherStatisticsRecord.setGatherDbCount( 0 );
             dsgGatherStatisticsRecord.setGatherFieldCount( 0 );
             dsgGatherStatisticsRecord.setGatherTableCount( 0 );
+            dsgGatherStatisticsRecord.setGatherInfoId( dsggatherStatisticsVO.getGatherId() );
         }
         dsgGatherStatisticsRecord.setUpdateTime( new Timestamp( System.currentTimeMillis() ) );
         dsgGatherStatisticsRecord.setGatherTableCount( dsgGatherStatisticsRecord.getGatherTableCount() + dsggatherStatisticsVO.getTableCount() );
