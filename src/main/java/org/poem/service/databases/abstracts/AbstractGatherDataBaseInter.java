@@ -277,4 +277,53 @@ public abstract class AbstractGatherDataBaseInter  implements GatherDataBaseInte
         return dataSetVO;
     }
 
+    /**
+     * 查询信息
+     * @param sql 需要执行的sql
+     * @param connection 连接信息
+     * @return
+     */
+    @Override
+    public  DataSetVO executeSql(String sql, Connection connection){
+        List<String> metas = new ArrayList<>();
+        List<List<Object>> datas = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            logger.info( "execute sql :" + sql );
+            pstmt = connection.prepareStatement( sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY );
+            rs = pstmt.executeQuery();
+            ResultSetMetaData metaData = rs.getMetaData();
+            int colsSize = metaData.getColumnCount();
+            for (int i = 1; i <= colsSize; i++) {
+                metas.add( metaData.getColumnName( i ) );
+            }
+            List<Object> row;
+            while (rs.next()) {
+                row = new ArrayList<>();
+                Object value;
+                for (int i = 1; i <= colsSize; i++) {
+                    value = rs.getObject( i );
+                    if (value == null) {
+                        row.add( null );
+                    } else {
+                        row.add( String.valueOf( value ) );
+                    }
+                }
+                datas.add( row );
+            }
+        } catch (SQLException e) {
+            logger.error( e.getMessage(), e );
+            e.printStackTrace();
+        } finally {
+            GatherDataSourceUtils.release( pstmt, rs );
+        }
+        DataSetVO dataSetVO = new DataSetVO();
+        dataSetVO.setDatas( datas );
+        dataSetVO.setColumns( metas );
+        dataSetVO.setDatabaseName( "" );
+        dataSetVO.setTableName( "" );
+        return dataSetVO;
+    }
 }
+

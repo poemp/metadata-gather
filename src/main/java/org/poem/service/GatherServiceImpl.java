@@ -98,9 +98,14 @@ public class GatherServiceImpl implements GatherService {
         GatherConnection connection = this.getGatherConnection( gatherId );
         GatherDataBaseInter gatherDataBaseInter = GatherDataSourceUtils.getBean();
         List<DateBaseEntity> dateBaseEntities = gatherDataBaseInter.getDataBases( connection.getConnection() );
+        try {
+            connection.getConnection().close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return dateBaseEntities.stream().map(
                 o -> {
-                    dsggatherStatisticsService.saveCurrent( new DsggatherStatisticsVO( gatherId, 1, 0, 0  ) );
+                    dsggatherStatisticsService.saveCurrent( new DsggatherStatisticsVO( gatherId, 1, 0, 0 ) );
                     DbVO dbVO = new DbVO();
                     dbVO.setGatherId( gatherId );
                     dbVO.setName( o.getDatabaseName() );
@@ -127,7 +132,7 @@ public class GatherServiceImpl implements GatherService {
                 .getAllTableName( dsgGatherDbRecord.getSchema(), connection.getConnection() );
         return tableEntities.stream().map(
                 o -> {
-                    dsggatherStatisticsService.saveCurrent( new DsggatherStatisticsVO( gatherVO.getGatherId(), 0, 1, 0  ) );
+                    dsggatherStatisticsService.saveCurrent( new DsggatherStatisticsVO( gatherVO.getGatherId(), 0, 1, 0 ) );
                     TableVO tableVO = new TableVO();
                     tableVO.setDbId( gatherVO.getId() );
                     tableVO.setName( o.getComment() );
@@ -154,7 +159,6 @@ public class GatherServiceImpl implements GatherService {
     }
 
     /**
-     *
      * @param tableVO
      * @return
      */
@@ -173,6 +177,11 @@ public class GatherServiceImpl implements GatherService {
         GatherDataBaseInter gatherDataBaseInter = GatherDataSourceUtils.getBean();
         DataSetVO setVO = gatherDataBaseInter
                 .getTaleFields( dbRecord.getSchema(), tableRecord.getTable_(), connection.getConnection() );
+        try {
+            connection.getConnection().close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return setVO.getDatas().stream().map(
                 list -> {
                     dsggatherStatisticsService.saveCurrent( new DsggatherStatisticsVO( dbRecord.getGatherId(), 0, 0, 1 ) );
@@ -193,7 +202,7 @@ public class GatherServiceImpl implements GatherService {
      * @return
      */
     @Override
-    public GatherDBTableFieldsVO getAllGatherDBTableFieldsVO(String gatherId, String  db, String table) {
+    public GatherDBTableFieldsVO getAllGatherDBTableFieldsVO(String gatherId, String db, String table) {
         GatherDBTableFieldsVO gatherDBTableFieldsVO = new GatherDBTableFieldsVO();
         GatherConnection n = this.getGatherConnection( gatherId );
         Connection connection = n.getConnection();
@@ -204,10 +213,10 @@ public class GatherServiceImpl implements GatherService {
             DbVO dbVO = new DbVO();
             dbVO.setGatherId( gatherId );
             dbVO.setName( dateBaseEntity.getDatabaseName() );
-            if (!StringUtils.isBlank( db ) &&  ! db.equals(  dateBaseEntity.getDatabaseName() )){
+            if (!StringUtils.isBlank( db ) && !db.equals( dateBaseEntity.getDatabaseName() )) {
                 continue;
             }
-            dsggatherStatisticsService.saveCurrent( new DsggatherStatisticsVO( gatherId, 1, 0, 0  ) );
+            dsggatherStatisticsService.saveCurrent( new DsggatherStatisticsVO( gatherId, 1, 0, 0 ) );
             List<TableEntity> tableEntities = gatherDataBaseInter.getAllTableName( dateBaseEntity.getDatabaseName(), connection );
             List<GatherTableVO> gatherTableVOS = Lists.newArrayList();
             for (TableEntity tableEntity : tableEntities) {
@@ -215,11 +224,11 @@ public class GatherServiceImpl implements GatherService {
                 tableVO.setDbId( null );
                 tableVO.setName( tableEntity.getComment() );
                 tableVO.setTable( tableEntity.getTableName() );
-                if (!StringUtils.isBlank( table ) &&  ! table.equals(   tableEntity.getTableName() )){
+                if (!StringUtils.isBlank( table ) && !table.equals( tableEntity.getTableName() )) {
                     continue;
                 }
-                dsggatherStatisticsService.saveCurrent( new DsggatherStatisticsVO( gatherId, 0, 1, 0  ) );
-                DataSetVO dataSetVO = gatherDataBaseInter .getTaleFields( dateBaseEntity.getDatabaseName(), tableEntity.getTableName(), connection );
+                dsggatherStatisticsService.saveCurrent( new DsggatherStatisticsVO( gatherId, 0, 1, 0 ) );
+                DataSetVO dataSetVO = gatherDataBaseInter.getTaleFields( dateBaseEntity.getDatabaseName(), tableEntity.getTableName(), connection );
                 List<TableFieldsVO> tableFieldsVOS = dataSetVO.getDatas().stream().map(
                         list -> {
                             String columnName = String.valueOf( list.get( 0 ) );
@@ -230,7 +239,7 @@ public class GatherServiceImpl implements GatherService {
                             fieldsVO.setDescription( name );
                             fieldsVO.setTableId( tableVO.getId() );
                             fieldsVO.setField( columnName );
-                            dsggatherStatisticsService.saveCurrent( new DsggatherStatisticsVO( gatherId, 0, 0, 1  ) );
+                            dsggatherStatisticsService.saveCurrent( new DsggatherStatisticsVO( gatherId, 0, 0, 1 ) );
                             return fieldsVO;
                         }
                 ).collect( Collectors.toList() );
@@ -244,8 +253,32 @@ public class GatherServiceImpl implements GatherService {
             gatherDBVO.setGatherTableVOS( gatherTableVOS );
             gatherDBVOS.add( gatherDBVO );
         }
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         gatherDBTableFieldsVO.setGatherDBVOS( gatherDBVOS );
         gatherDBTableFieldsVO.setGratherid( gatherId );
         return gatherDBTableFieldsVO;
+    }
+
+    /**
+     * @param sql      执行的sql
+     * @param sourceId source id
+     * @return
+     */
+    @Override
+    public DataSetVO executeSQL(String sql, String sourceId) {
+        GatherConnection n = this.getGatherConnection( sourceId );
+        Connection connection = n.getConnection();
+        GatherDataBaseInter gatherDataBaseInter = GatherDataSourceUtils.getBean();
+        DataSetVO dataSetVO = gatherDataBaseInter.executeSql( sql, connection );
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dataSetVO;
     }
 }

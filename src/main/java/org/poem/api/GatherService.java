@@ -1,6 +1,7 @@
 package org.poem.api;
 
 import org.poem.api.vo.*;
+import org.poem.api.vo.column.entity.DataSetVO;
 
 import java.util.List;
 
@@ -50,4 +51,13 @@ public interface GatherService {
      * @return
      */
     public GatherDBTableFieldsVO getAllGatherDBTableFieldsVO(String gatherId, String  db, String table);
+
+
+    /**
+     * 获取查询
+     * @param sql 执行的sql
+     * @param sourceId source id
+     * @return
+     */
+    public DataSetVO executeSQL(String sql, String sourceId);
 }

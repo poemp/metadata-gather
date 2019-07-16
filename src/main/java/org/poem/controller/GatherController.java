@@ -179,15 +179,31 @@ public class GatherController {
             @ApiResponse(code = 404, message = "请求路径没有找到"),
             @ApiResponse(code = 500, message = "数据库发生错误")
     })
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "gatherId", required = true, value = "连接信息id", dataType = "String", example = "123456"),
-            @ApiImplicitParam(name = "db", required = false, value = "采集的数据库", dataType = "String", example = "test"),
-            @ApiImplicitParam(name = "table", required = false, value = "采集的数据表", dataType = "String", example = "test")
-    })
     @PostMapping(value = "/getDbAndTableAndFieldAndSave")
     public void getDbAndTableAndFieldAndSave(String gatherId,String  db, String table) {
         GatherDBTableFieldsVO gatherDBTableFieldsVO = this.gatherService.getAllGatherDBTableFieldsVO( gatherId , db, table);
         this.metadataService.saveGather( gatherDBTableFieldsVO );
+    }
+
+    /**
+     *
+     * @param sql
+     * @param sourceId
+     */
+    @ApiOperation(value = "0110-执行sql 前端不做",
+            notes = "执行sql 前端不做")
+    @ApiResponses({
+            @ApiResponse(code = 400, message = "请求参数没有填好"),
+            @ApiResponse(code = 404, message = "请求路径没有找到"),
+            @ApiResponse(code = 500, message = "数据库发生错误")
+    })
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "source", required = true, value = "连接信息id", dataType = "String", example = "123456"),
+            @ApiImplicitParam(name = "sql", required = true, value = "sql", dataType = "String")
+    })
+    @PostMapping(value = "/executeSQL")
+    public void executeSQL(String sql, String sourceId) {
+        this.gatherService.executeSQL( sql, sourceId );
     }
 
 

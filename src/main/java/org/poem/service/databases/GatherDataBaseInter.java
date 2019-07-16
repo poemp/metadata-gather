@@ -67,4 +67,13 @@ public interface GatherDataBaseInter {
      * @return
      */
     DataSetVO getTableColumnsDatas(TableEntity tableEntity, Page page, Connection connection);
+
+
+    /**
+     * 查询信息
+     * @param sql 需要执行的sql
+     * @param connection 连接信息
+     * @return
+     */
+    DataSetVO executeSql(String sql, Connection connection);
 }
