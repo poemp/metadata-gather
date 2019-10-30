@@ -1,0 +1,18 @@
+#该配置文件用于配置全局变量
+global:
+  ip: 127.0.0.1  #本机以太网ip地址，需要手动配置
+ #数据源配置
+  datasource:
+    name: test  #数据库源名称
+    #database-name: db_dcp_dev
+    database-name: kylo
+    url: 127.0.0.1  #数据库所在的url地址
+    port: 3306   #数据库端口
+    username: root   #数据库用户名
+    password: 123456   #数据库密码
+  gather:
+    server:
+      port: 10015
+    logger:
+      storage: LOCAL # LOCAL or HDFS
+      path:

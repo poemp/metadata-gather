@@ -2,7 +2,6 @@ package org.poem.loghelper.file.impl;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.fusesource.hawtbuf.BufferInputStream;
 import org.poem.loghelper.file.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +40,7 @@ public class LocalFileServiceImpl implements FileService {
         if (StringUtils.isBlank( path )){
             path = System.getProperty("user.dir");
         }
-        BufferInputStream fin = null;
+        ByteArrayInputStream fin = null;
         FileOutputStream fout = null;
         FileChannel fic = null;
         FileChannel foc = null;
@@ -53,7 +52,7 @@ public class LocalFileServiceImpl implements FileService {
             if (!dst.exists()) {
                 Files.createFile( dst.toPath(), NO_ATTRIBUTES );
             }
-            fin = new BufferInputStream( content.getBytes() );
+            fin = new ByteArrayInputStream( content.getBytes() );
             fout = new FileOutputStream( dst , true);
             foc = fout.getChannel();
             // 16KB缓冲区

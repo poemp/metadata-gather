@@ -6,16 +6,13 @@ spring:
   application:
     name: metadata-gather
   datasource:
-    logAbandoned: true
-    minIdle: 5
-    removeAbandoned: true
-    maxWait: 1000
     name: ${global.datasource.name}
-    removeAbandonedTimeout: 60
     url: jdbc:mysql://${global.datasource.url}:${global.datasource.port}/${global.datasource.database-name}?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: ${global.datasource.username}
     password: ${global.datasource.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
+    dbcp2:
+      log-abandoned: true
   flyway:
     locations: classpath:migration
     enabled: false
@@ -23,26 +20,6 @@ spring:
     sql-dialect: MYSQL
   main:
     allow-bean-definition-overriding: true
-auth:
-  client:
-    token-header: client-token
-    id: dsg-rulesengine
-    secret: 123456
-  serviceId: ace-auth
-  user:
-    token-header: Authorization
-    limit-expire: 1440
-eureka:
-  instance:
-    hostname: ${global.ip}
-    ip-address: ${global.ip}
-    instance-id: ${global.ip}:${server.port}
-    healthCheckUrlPath: /health
-    statusPageUrlPath: /info
-    prefer-ip-address: true
-  client:
-    serviceUrl:
-      defaultZone: http://${global.eureka.host}:${global.eureka.port}/eureka/
 logging:
   gather:
     storage: ${global.gather.logger.storage}

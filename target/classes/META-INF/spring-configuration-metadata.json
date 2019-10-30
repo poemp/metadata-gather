@@ -1,0 +1,27 @@
+{
+  "groups": [
+    {
+      "name": "logging.gather",
+      "type": "org.poem.loghelper.LoggerHelper",
+      "sourceType": "org.poem.loghelper.LoggerHelper"
+    }
+  ],
+  "properties": [
+    {
+      "name": "logging.gather.file-service",
+      "type": "org.poem.loghelper.file.FileService",
+      "sourceType": "org.poem.loghelper.LoggerHelper"
+    },
+    {
+      "name": "logging.gather.path",
+      "type": "java.lang.String",
+      "sourceType": "org.poem.loghelper.LoggerHelper"
+    },
+    {
+      "name": "logging.gather.storage",
+      "type": "java.lang.String",
+      "sourceType": "org.poem.loghelper.LoggerHelper"
+    }
+  ],
+  "hints": []
+}

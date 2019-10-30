@@ -44,7 +44,7 @@ public class JooqPgGen {
                 .withGenerate( new Generate()
                 )
                 .withTarget( new Target()
-                        .withPackageName( "org.poem.entities" ).withDirectory( "src/main/java" ) );
+                        .withPackageName( "org.poem.code.entities" ).withDirectory( "src/main/java" ) );
         Configuration conf = new Configuration()
                 .withJdbc( jdbc )
                 .withGenerator( generator );

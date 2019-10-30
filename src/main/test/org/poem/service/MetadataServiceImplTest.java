@@ -1,15 +1,15 @@
-package org.poem.service;
+package org.poem.code.service;
 
 
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.poem.MetadataGatherApp;
-import org.poem.api.GatherService;
-import org.poem.api.MetadataService;
-import org.poem.api.vo.*;
-import org.poem.api.vo.query.DbQueryVO;
-import org.poem.api.vo.query.TableQueryVO;
+import org.poem.code.api.GatherService;
+import org.poem.code.api.MetadataService;
+import org.poem.code.api.vo.*;
+import org.poem.code.api.vo.query.DbQueryVO;
+import org.poem.code.api.vo.query.TableQueryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;

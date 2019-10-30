@@ -6,14 +6,10 @@ import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
-import org.fusesource.hawtbuf.BufferInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.ByteBuffer;
 
 public class HdfsUtils {
@@ -26,10 +22,8 @@ public class HdfsUtils {
 
     /**
      * 获取文件的内容
-     *
      * @param path
      * @param file
-     * @param source
      * @return
      */
     public static String getFileContent(String path, String file) {
@@ -88,7 +82,7 @@ public class HdfsUtils {
                 ot = fs.create( hdfsPath );
             }
 
-            is1 = new BufferedInputStream( new BufferInputStream( source.getBytes() ) );
+            is1 = new BufferedInputStream( new ByteArrayInputStream( source.getBytes() ) );
             out = fs.append( hdfsPath );
             IOUtils.copyBytes( is1, out, configuration );
         } catch (IOException e) {
