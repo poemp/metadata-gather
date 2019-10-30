@@ -59,8 +59,9 @@ public class GatherServiceImpl implements GatherService {
     @Override
     public boolean testGather(String gatherId) {
         GatherConnection c = getGatherConnection( gatherId );
+        String testSql= "select 1 ";
         try {
-            return c.getConnection().createStatement() != null;
+            return  c.getConnection().createStatement().execute(testSql);
         } catch (SQLException e) {
             logger.error( e.getMessage(), e );
             e.printStackTrace();
