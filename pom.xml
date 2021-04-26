@@ -44,7 +44,7 @@
         <spring.version>5.1.4.RELEASE</spring.version>
         <lombok.version>1.18.4</lombok.version>
         <commons-collction.version>3.2.2</commons-collction.version>
-        <commons-io.version>2.4</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <commons-lang.version>2.4</commons-lang.version>
         <aspectj.version>1.9.1</aspectj.version>
     </properties>
