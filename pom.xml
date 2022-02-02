@@ -36,7 +36,7 @@
         <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
         <springboot.version>2.1.2.RELEASE</springboot.version>
         <HikariCP.version>3.3.0</HikariCP.version>
-        <postgresql.version>42.2.5</postgresql.version>
+        <postgresql.version>42.2.25</postgresql.version>
         <jooq.version>3.11.9</jooq.version>
         <swagger2.version>2.9.2</swagger2.version>
         <swaggerbootstrapui.version>1.8.9</swaggerbootstrapui.version>
